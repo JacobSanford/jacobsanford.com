@@ -1,7 +1,44 @@
 ---
-layout: post
-title: "Test"
+layout: page
+title: "A Docker Centered Workflow - Part 1 : Introduction"
 date: 2016-02-16 09:17:06 -0400
 comments: true
+sidebar: false
 categories: 
 ---
+
+## What is Docker?
+From [What is Docker](https://www.docker.com/whatisdocker):
+> Docker [is a virtualization tool that] allows you to package an application with all of its dependencies into a standardized unit for software development. Docker containers wrap up a piece of software in a complete filesystem that contains everything it needs to run: code, runtime, system tools, system libraries – anything you can install on a server. This guarantees that it will always run the same, regardless of the environment it is running in.
+
+## Glossary of Terms
+It would be helpful to first familiarize yourself with the following terms, which are used often when discussing Docker:
+
+* ```host``` : A parent OS/server/machine that runs docker _containers_.
+* ```container``` : An isolated, stand-alone virtual instance that the docker _host_ instantiates, abstracting the _host_ Hardware and Filesystem/OS for use within the container. A _container_ must be started from an _image_.
+* ```image``` : A binary file that contains a state snapshot of a previously constructed _container_. This  serves as the starting point of a new _container_. Containers are built from _repositories_ and stored in _registries_
+* ```repository``` : A github repository that contains the files and metadata used to build an _image_, which contains a _Dockerfile_. An example is [unb-libraries/docker-nginx-php](https://github.com/unb-libraries/docker-nginx-php).
+* ```Dockerfile``` : The core file in a _repository_, which contains metadata and steps used to build the _image_.  An [example Dockerfile can be found here](https://github.com/unb-libraries/docker-nginx-php/blob/master/Dockerfile).
+* ```registry``` : A centralized storage location for docker _images_. Unique _images_ are identified by a namespace (such as 'unb-libraries/docker-drupal') . Most docker _images_ we use are stored in and downloaded from a central registry known as [Docker Hub](https://hub.docker.com/).
+
+## How Does Docker Differ From Other Virtualization Tools?
+From [How is Docker different from a normal virtual machine?](http://stackoverflow.com/questions/16047306/how-is-docker-different-from-a-normal-virtual-machine):
+
+> Docker [...] [creates virtual instances by serving as a bridge to] runC (formerly known as libcontainer), that runs in the same operating system as its host. This allows it to share a lot of the host operating system resources. It also uses layered filesystems like AuFS. It also manages the networking for you as well.
+
+> [...]
+
+> With [runC] you get less isolation, but they are more lightweight and require less resources. So you could easily run 1000's on a host, and it doesn't even blink. Try doing that with Xen, and unless you have a really big host, I don't think it is possible.
+
+> [...]
+
+> A full virtualized system usually takes minutes to start, [runC] containers take seconds, and sometimes even less than a second.
+
+## What are Some Additional Tools Used With Docker?
+
+* ```docker-compose``` : From [Overview of Docker Compose](https://docs.docker.com/compose/):
+
+> Compose is a tool for defining and running multi-container applications with Docker. With Compose, you define a multi-container application in a single file, then [create multiple docker containers with] a single command which does everything that needs to be done to get [them] running.
+
+## Next
+Continue with : [2. Setting Up Prerequisites](https://github.com/unb-libraries/docker-drupal/wiki/2.-Setting-Up-Prerequisites)
