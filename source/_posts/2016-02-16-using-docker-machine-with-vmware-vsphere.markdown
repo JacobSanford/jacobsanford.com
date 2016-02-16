@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Using docker-machine With VMWare VSphere"
+subtitle: "This is a subtitle"
 date: 2016-02-16 12:32:51 -0400
 comments: true
 sidebar: false
