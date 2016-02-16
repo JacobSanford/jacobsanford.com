@@ -1,3 +1,6 @@
 [submodule ".themes/octostrap3"]
 	path = .themes/octostrap3
 	url = https://github.com/kAworu/octostrap3
+[submodule ".themes/octofound"]
+	path = .themes/octofound
+	url = https://github.com/annejohnson/octofound

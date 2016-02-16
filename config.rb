@@ -17,3 +17,7 @@ fonts_dir = "source/fonts"
 
 line_comments = false
 output_style = :compressed
+
+# Octofound
+add_import_path "source/assets/bower_components/foundation/scss"
+javascripts_dir = "source/js"
