@@ -9,10 +9,12 @@ categories: docker docker-machine vmware vsphere
 ---
 
 ## Docker-Machine and VSphere
-By default, ```docker-machine``` on OSX leverages Virtualbox to deploy a Boot2Docker VM to serve as a docker endpoint for the host's docker commands. This configuration satisfies the common use case for development, but does suffer from a few drawbacks, including persistence and [permission issues due to VBoxFS](https://github.com/boot2docker/boot2docker/issues/581). As an alternative, one may wish to deploy the Boot2Docker VM on vSphere managed hardware.
+By default, ```docker-machine``` on OSX leverages Virtualbox to deploy a Boot2Docker VM to serve as an endpoint for the host docker commands. This configuration satisfies a common use case for development, but does suffer from drawbacks relating to "the 3 P's" : Performance, Persistence and Permission issues ([due to VBoxFS](https://github.com/boot2docker/boot2docker/issues/581)). A solution to most of these drawbacks arises when you deploy the Boot2Docker VM on a vSphere managed host, instead of your local computer.
+
+If you have access to a VMWare VSphere host, the steps are as follows:
 
 ### 1. Determine your VSphere user credentials
-This guide assumes you have previously added an authorized user to VSphere. For the purposes of this guide, we will refer to the username as ```docker```. It is recommended that you not use the root account. For additional assistance, see [VMWare KB #2082641](https://kb.vmware.com/selfservice/microsites/search.do?language=en_US&cmd=displayKC&externalId=2082641).
+This post assumes you have credentials for a remote user on VSphere, which will be referred to as ```vsphere-user```. It is recommended that you not use the root account. For additional assistance, see [VMWare KB #2082641](https://kb.vmware.com/selfservice/microsites/search.do?language=en_US&cmd=displayKC&externalId=2082641).
 
 ### 2. Install GovC (OSX)
 
@@ -58,13 +60,13 @@ Now that ```go``` is installed, we can install ```govc```.
 
 Using ```bash shell```
 {% codeblock lang:bash %}
-> export GOVC_URL=https://docker:*PASSWORD*@192.168.0.10/sdk
+> export GOVC_URL=https://vsphere-user:*PASSWORD*@192.168.0.10/sdk
 > export GOVC_INSECURE=1
 {% endcodeblock %}
 
 Using ```fish shell```
 {% codeblock lang:bash %}
-> set -Ux GOVC_URL https://docker:*PASSWORD*@192.168.0.10/sdk
+> set -Ux GOVC_URL https://vsphere-user:*PASSWORD*@192.168.0.10/sdk
 > set -Ux GOVC_INSECURE 1
 {% endcodeblock %}
 
@@ -143,4 +145,4 @@ Running that command:
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 {% endcodeblock %}
 
-All docker commands now run on the VSphere host.
+All docker commands will now run on the VSphere host.
