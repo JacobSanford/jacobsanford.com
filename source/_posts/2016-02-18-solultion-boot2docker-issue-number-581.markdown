@@ -7,7 +7,7 @@ sidebar: false
 categories: docker boot2docker osx
 ---
 
-Already discussed to death, [boot2docker issue #581](https://github.com/boot2docker/boot2docker/issues/581) (18 months ago) issue reported that _docker volumes_ from the OSX disk will not allow writes if the user insider the docker container writing the file isn't root, even with proper ownership set. We've looked at this before.
+Already discussed to death, [boot2docker issue #581](https://github.com/boot2docker/boot2docker/issues/581) (18 months ago) reported that _docker volumes_ from the OSX disk will not allow writes if the user insider the docker container writing the file isn't root, even with proper ownership set. We've looked at this before.
 
 There are several work-arounds proposed, I thought we could investigate the most promising one. The first step, however is to:
 
