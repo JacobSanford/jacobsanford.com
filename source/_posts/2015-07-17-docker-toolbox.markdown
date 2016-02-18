@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Docker Toolbox, OSX, and VirtualBox VBoxFS Permissions"
+title: "Docker Toolbox, OSX, and VirtualBox VBoxSF Permissions"
 date: 2015-07-17 08:39:25 -0400
 comments: true
 sidebar: false
