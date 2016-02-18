@@ -10,7 +10,7 @@ For the past several years, we have been developing and managing a moderate amou
 
 Pushback was born conceptually through discussions with [Jen Whitney](https://github.com/jwhitney) and [Kassim Machioudi](https://twitter.com/kaschioudi), and was inspired by the (now-abandoned) [Tugboat project by Lullabot](https://github.com/Lullabot/jenkins_github_drupal). It is simple and does nothing novel. A summary:
 
-+ Establish a core, standardized single-instance repository format in a git repository that contains a drush makefile, install profiles, data, patches, and CasperJS tests for the application's UI.
++ Establish a core, standardized single-instance repository format in a git repository that describes and controls the deployment of a site. It contains a drush makefile, install profiles, data, patches, and CasperJS tests for the application's UI.
 + From this repository, builds are triggered via a post-commit hook to Jenkins from GitHub.
 + Jenkins then builds the instance locally, optionally testing the local copy.
 + If the build is successful, the Drupal is then transferred via rsync to the _prod_ server (with optional deployment to a _staging_ server first).
