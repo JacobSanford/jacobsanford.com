@@ -2,14 +2,14 @@
 layout: post
 title: "Deploying a docker-machine to a VMWare VSphere Host"
 subtitle: "This is a subtitle"
-date: 2016-02-16 12:32:51 -0400
+date: 2015-10-12 12:32:51 -0400
 comments: true
 sidebar: false
 categories: docker docker-machine vmware vsphere
 ---
 
 ## Docker-Machine and VSphere
-By default, ```docker-machine``` on OSX leverages Virtualbox to deploy a Boot2Docker VM to serve as an endpoint for the host docker commands. This configuration satisfies a common use case for development, but does suffer from drawbacks relating to "the 3 P's" : Performance, Persistence and Permission issues ([due to VBoxFS](https://github.com/boot2docker/boot2docker/issues/581)). A solution to most of these drawbacks arises when you deploy the Boot2Docker VM on a vSphere managed host, instead of your local computer.
+By default, ```docker-machine``` on OSX leverages Virtualbox to deploy a Boot2Docker VM to serve as an endpoint for the host docker commands. This configuration satisfies a common use case for development, but does suffer from drawbacks relating to "the 3 P's" : Performance, Persistence and Permission issues ([due to VBoxFS](https://github.com/boot2docker/boot2docker/issues/581)). You can dodge some of these by provisioning Boot2Docker VM on a vSphere managed host, instead of your local computer.
 
 If you have access to a VMWare VSphere host, the steps are as follows:
 

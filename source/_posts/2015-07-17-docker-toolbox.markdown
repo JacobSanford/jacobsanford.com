@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Docker Toolbox, OSX, and VirtualBox VBoxFS Permissions"
-date: 2016-02-17 08:39:25 -0400
+date: 2015-07-17 08:39:25 -0400
 comments: true
 sidebar: false
 categories: docker boot2docker osx
