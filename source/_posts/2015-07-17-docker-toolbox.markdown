@@ -58,6 +58,6 @@ This issue seems unlikely to be fixed at the boot2docker level soon. There are m
 
 + [Make sure that mysql runs using the same user and group ids as your local OSX user.](https://github.com/docker-library/mysql/issues/99#issuecomment-145665645)
 + [xhyve](https://github.com/mist64/xhyve)
-+ [Convert the VBOXSF mount to NFS](https://github.com/adlogix/docker-machine-nfs).
++ Leverage NFS in some manner instead of VBOXSF.
 
 The last solution seems to work swimmingly, but the tool recently dealt with a breaking bug. A fix has been implemented and I would encourage you to explore it further.

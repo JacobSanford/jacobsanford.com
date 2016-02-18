@@ -65,7 +65,7 @@ Is the above test valid? As a control, we may run docker directly on a linux hos
 {% endcodeblock %}
 
 ## Solution : Convert VBOXSF to NFS?
-[docker-machine-nfs](https://github.com/adlogix/docker-machine-nfs)is a helper to convert the ```/User``` share from VBOXSF to NFS after provisioning. Set-up is simple:
+[docker-machine-nfs](https://github.com/adlogix/docker-machine-nfs) is a helper that converts the ```/User``` share from VBOXSF to NFS after provisioning. Set-up is simple:
 
 {% codeblock lang:bash %}
 > curl -s https://raw.githubusercontent.com/adlogix/docker-machine-nfs/master/docker-machine-nfs.sh |
