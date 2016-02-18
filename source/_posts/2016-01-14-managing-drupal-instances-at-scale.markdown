@@ -16,7 +16,7 @@ Pushback was born conceptually through discussions with [Jen Whitney](https://gi
 + If the build is successful, the Drupal is then transferred via rsync to the _prod_ server (with optional deployment to a _staging_ server first).
 + General post-deploy tasks are run, including database updates, clearing the cache, and checking permissions.
 
-This workflow delivered very positive benefits (especially for a small team):
+This workflow delivered very positive benefits (especially for our small team):
 
 + Module updates and security releases are almost effortless, as one needed only change version numbers in Drush Makefiles, and push to GitHub. Network-wide updates could be done in a single commit with a tool such as [unb-libraries/bulk-repo-find-replace](https://github.com/unb-libraries/bulk-repo-find-replace).
 + Extremely smooth development of existing Drupal instances: One-button spin up and database/file transfer into a local development clone using a Chef Server (Chef-solo never felt right for our use case), a [A Drupal Cookbook](https://github.com/unb-libraries/unblibraries-drupal) and customized Vagrants.
