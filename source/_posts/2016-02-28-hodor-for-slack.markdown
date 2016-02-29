@@ -21,7 +21,7 @@ The 'mood' of reply is determined by comparing the content of the triggering mes
 docker run \
        --rm \
        --name hodorbot \
-       -e SLACK_TOKEN=<BOT_TOKEN_OBTAINED_FROM_SLACK_INTEGRATION> \
+       -e SLACK_TOKEN=_API_TOKEN_OBTAINED_FROM_SLACK_INTEGRATION_ \
        jacobsanford/slack-hodor
 ```
 
