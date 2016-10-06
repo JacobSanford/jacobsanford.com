@@ -3,4 +3,4 @@
 	url = git://github.com/kAworu/octostrap3
 [submodule ".themes/octofound"]
 	path = .themes/octofound
-	url = git://github.com/annejohnson/octofound
+	url = git://github.com/Aierk/octo-found
