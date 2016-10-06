@@ -2,7 +2,7 @@
 sudo gem install bundler
 bundle install
 rake
-rake install['octofound']
+rake install['octo-found']
 rake generate
 git submodule init
 git submodule update
