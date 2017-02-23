@@ -4,6 +4,6 @@ title: About
 permalink: /about/
 ---
 
-I am freelance developer. Currently doing more in backend, focused in Python and Django.
+Enthusiastic solutions architect at @unb-libraries, Ops/DevOps aficionado, Drupal evangelist.
 
-email: agus[at]python.web.id
+email: jsanford[at]unb.ca
