@@ -5,9 +5,151 @@
     <description>Plunging From the Shoulders of Giants</description>
     <link>http://jacobsanford.com/</link>
     <atom:link href="http://jacobsanford.com/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 23 Feb 2017 16:56:05 -0400</pubDate>
-    <lastBuildDate>Thu, 23 Feb 2017 16:56:05 -0400</lastBuildDate>
+    <pubDate>Sat, 25 Feb 2017 11:18:09 -0400</pubDate>
+    <lastBuildDate>Sat, 25 Feb 2017 11:18:09 -0400</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
+    
+      <item>
+        <title>Drupal, search_api_solr and Partial Matches</title>
+        <description>&lt;p&gt;Configuring solr to return &lt;a href=&quot;https://www.google.ca/search?q=search_api_solr+partial+matches&quot;&gt;partial matches through Drupal’s search_api_solr is well documented&lt;/a&gt;. In particular, one &lt;a href=&quot;https://www.drupal.org&quot;&gt;d.o document&lt;/a&gt; is thorough and stands out: &lt;a href=&quot;https://www.drupal.org/node/200976&quot;&gt;Customizing the Solr configuration&lt;/a&gt;. It states:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;First, copy a text type definition to schema_extra_types.xml and change the identifier, as described above.
+Then, add the following line to the type definition after the first occurrence of “solr.SnowballPorterFilterFactory” (inside of the &lt;analyzer type=&quot;index&quot;&gt; element; not after the second occurrence):&lt;/analyzer&gt;&lt;/p&gt;
+
+  &lt;filter class=&quot;solr.EdgeNGramFilterFactory&quot; minGramSize=&quot;2&quot; maxGramSize=&quot;25&quot; /&gt;
+
+  &lt;p&gt;If you want partial matches inside of words to be found, too, simply remove the “Edge” part from that line. In this case, you should also remove both occurrences of the solr.WordDelimiterFilterFactory filters: remove everything from the &amp;lt;filter that preceeds that string to the “great than” sign (&amp;gt;) coming after it.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Sounds great! Adding the &lt;em&gt;NGramFilterFactory&lt;/em&gt; filter after the &lt;em&gt;SnowballPorterFilterFactory&lt;/em&gt; seems a bit befuddling at first (both &lt;em&gt;SnowballPorterFilterFactory&lt;/em&gt; and &lt;em&gt;NGramFilterFactory&lt;/em&gt; tokenize the strings). Doubly creating tokens seems to be a bit redundant, however with small enough ngram sizes I suppose it might be of benefit. Also, &lt;em&gt;SnowballPorterFilterFactory&lt;/em&gt; does appear to store the original string, which may not be done in a &lt;em&gt;NGramFilterFactory&lt;/em&gt; filter if a &lt;code class=&quot;highlighter-rouge&quot;&gt;maxGramSize&lt;/code&gt; of less than the string length is specified. Or does it?&lt;/p&gt;
+
+&lt;p&gt;I’m nattering. All of this isn’t the point here : I’m certainly not a solr expert and couldn’t speak to common use cases.&lt;/p&gt;
+
+&lt;h2 id=&quot;initial-results&quot;&gt;Initial Results&lt;/h2&gt;
+&lt;p&gt;Regardless, a configuration as above does indeed deliver partial matching functionality in results, but &lt;strong&gt;with relevance scores where partial and exact field matches are ranked equally&lt;/strong&gt;. An exact match would only be one of many equally-scored derived tokens. In these cases, the order they appear in search results would depend on the secondary sort.&lt;/p&gt;
+
+&lt;p&gt;So yes, the many documents that advise changing the &lt;em&gt;text&lt;/em&gt; fieldType filters to add &lt;em&gt;NGramFilterFactory&lt;/em&gt; (or creating a new type, and assigning that to the ts_* dynamic field), does solve the partial matching problem.&lt;/p&gt;
+
+&lt;p&gt;But that isn’t our desired goal or UX in most cases we’ve faced. I believe that &lt;strong&gt;users who type &lt;em&gt;exact&lt;/em&gt; node titles into search boxes would generally expect to see those first in a result set, followed by those that match &lt;em&gt;somewhat&lt;/em&gt;, and then &lt;em&gt;less-and-less&lt;/em&gt;&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-goal&quot;&gt;The Goal&lt;/h2&gt;
+&lt;p&gt;So, what we REALLY want is for solr to return a result set where:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Partial matching is considered across all fields&lt;/li&gt;
+  &lt;li&gt;EXACT matches on certain fields are scored higher and given more relevancy.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;solution&quot;&gt;Solution&lt;/h2&gt;
+&lt;p&gt;For this solution, consider the title field as the one to boost for an exact match.&lt;/p&gt;
+
+&lt;h3 id=&quot;edit-solr-configuration-files&quot;&gt;1) Edit Solr Configuration Files&lt;/h3&gt;
+&lt;p&gt;On your solr server, add a new field type, &lt;code class=&quot;highlighter-rouge&quot;&gt;text_ngram&lt;/code&gt; to the schema:&lt;/p&gt;
+
+&lt;h4 id=&quot;update-solrextratypesxml&quot;&gt;Update &lt;em&gt;solr_extra_types.xml&lt;/em&gt;&lt;/h4&gt;
+
+&lt;p&gt;In &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;types&amp;gt;&lt;/code&gt;, add a new ngrammed field type for text:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &amp;lt;fieldType name=&quot;text_ngram&quot; class=&quot;solr.TextField&quot; positionIncrementGap=&quot;100&quot;&amp;gt;
+      &amp;lt;analyzer type=&quot;index&quot;&amp;gt;
+        &amp;lt;charFilter class=&quot;solr.MappingCharFilterFactory&quot; mapping=&quot;mapping-ISOLatin1Accent.txt&quot;/&amp;gt;
+        &amp;lt;tokenizer class=&quot;solr.WhitespaceTokenizerFactory&quot;/&amp;gt;
+        &amp;lt;!-- in this example, we will only use synonyms at query time
+        &amp;lt;filter class=&quot;solr.SynonymFilterFactory&quot; synonyms=&quot;index_synonyms.txt&quot; ignoreCase=&quot;true&quot; expand=&quot;false&quot;/&amp;gt;
+        --&amp;gt;
+        &amp;lt;!-- Case insensitive stop word removal. --&amp;gt;
+        &amp;lt;filter class=&quot;solr.StopFilterFactory&quot;
+                ignoreCase=&quot;true&quot;
+                words=&quot;stopwords.txt&quot;
+                /&amp;gt;
+        &amp;lt;filter class=&quot;solr.LengthFilterFactory&quot; min=&quot;2&quot; max=&quot;100&quot; /&amp;gt;
+        &amp;lt;filter class=&quot;solr.LowerCaseFilterFactory&quot;/&amp;gt;
+        &amp;lt;filter class=&quot;solr.NGramFilterFactory&quot; minGramSize=&quot;3&quot; maxGramSize=&quot;15&quot; /&amp;gt;
+        &amp;lt;filter class=&quot;solr.RemoveDuplicatesTokenFilterFactory&quot;/&amp;gt;
+      &amp;lt;/analyzer&amp;gt;
+      &amp;lt;analyzer type=&quot;query&quot;&amp;gt;
+        &amp;lt;charFilter class=&quot;solr.MappingCharFilterFactory&quot; mapping=&quot;mapping-ISOLatin1Accent.txt&quot;/&amp;gt;
+        &amp;lt;tokenizer class=&quot;solr.WhitespaceTokenizerFactory&quot;/&amp;gt;
+        &amp;lt;filter class=&quot;solr.SynonymFilterFactory&quot; synonyms=&quot;synonyms.txt&quot; ignoreCase=&quot;true&quot; expand=&quot;true&quot;/&amp;gt;
+        &amp;lt;filter class=&quot;solr.StopFilterFactory&quot;
+                ignoreCase=&quot;true&quot;
+                words=&quot;stopwords.txt&quot;
+                /&amp;gt;
+        &amp;lt;filter class=&quot;solr.LengthFilterFactory&quot; min=&quot;2&quot; max=&quot;100&quot; /&amp;gt;
+        &amp;lt;filter class=&quot;solr.LowerCaseFilterFactory&quot;/&amp;gt;
+        &amp;lt;filter class=&quot;solr.RemoveDuplicatesTokenFilterFactory&quot;/&amp;gt;
+      &amp;lt;/analyzer&amp;gt;
+      &amp;lt;analyzer type=&quot;multiterm&quot;&amp;gt;
+        &amp;lt;charFilter class=&quot;solr.MappingCharFilterFactory&quot; mapping=&quot;mapping-ISOLatin1Accent.txt&quot;/&amp;gt;
+        &amp;lt;tokenizer class=&quot;solr.WhitespaceTokenizerFactory&quot;/&amp;gt;
+        &amp;lt;filter class=&quot;solr.SynonymFilterFactory&quot; synonyms=&quot;synonyms.txt&quot; ignoreCase=&quot;true&quot; expand=&quot;true&quot;/&amp;gt;
+        &amp;lt;filter class=&quot;solr.StopFilterFactory&quot;
+                ignoreCase=&quot;true&quot;
+                words=&quot;stopwords.txt&quot;
+                /&amp;gt;
+        &amp;lt;filter class=&quot;solr.LengthFilterFactory&quot; min=&quot;2&quot; max=&quot;100&quot; /&amp;gt;
+        &amp;lt;filter class=&quot;solr.LowerCaseFilterFactory&quot;/&amp;gt;
+        &amp;lt;filter class=&quot;solr.RemoveDuplicatesTokenFilterFactory&quot;/&amp;gt;
+      &amp;lt;/analyzer&amp;gt;
+    &amp;lt;/fieldType&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;update-schemaxml&quot;&gt;Update &lt;em&gt;schema.xml&lt;/em&gt;&lt;/h4&gt;
+
+&lt;p&gt;Alter the default ts_* fieldtype to be the new text_ngram, tokenizing the values. In &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;fields&amp;gt;&lt;/code&gt;, change:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &amp;lt;field name=&quot;ts_*&quot; type=&quot;text&quot; indexed=&quot;true&quot;  stored=&quot;true&quot; multiValued=&quot;false&quot; termVectors=&quot;true&quot; /&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;to&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &amp;lt;field name=&quot;ts_*&quot; type=&quot;text_ngram&quot; indexed=&quot;true&quot;  stored=&quot;true&quot; multiValued=&quot;false&quot; termVectors=&quot;true&quot; /&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Then add an exact match element for title and set it as text.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &amp;lt;field name=&quot;ts_title&quot; type=&quot;text&quot; indexed=&quot;true&quot;  stored=&quot;true&quot; multiValued=&quot;false&quot; termVectors=&quot;true&quot; /&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;restart-solr&quot;&gt;2) Restart Solr&lt;/h3&gt;
+&lt;p&gt;Restart solr to load the new schema.&lt;/p&gt;
+
+&lt;h3 id=&quot;update-searchapisolr-drupal-configuration&quot;&gt;3) Update search_api_solr Drupal configuration&lt;/h3&gt;
+&lt;p&gt;Navigate to &lt;code class=&quot;highlighter-rouge&quot;&gt;/admin/config/search/search-api/index/*INDEXNAME*/fields&lt;/code&gt; in Drupal.&lt;/p&gt;
+
+&lt;p&gt;Ensure  the title field exists twice in the field list, each with machine names:
+* &lt;code class=&quot;highlighter-rouge&quot;&gt;title&lt;/code&gt; : FULLTEXT with Boost 21.0 (Exact title matches as specified in schema.xml)
+* &lt;code class=&quot;highlighter-rouge&quot;&gt;title_ngram&lt;/code&gt; : FULLTEXT with Boost 15.0  (Partial matches on title, uses dynamic ts_*)&lt;/p&gt;
+
+&lt;p&gt;Verify that all other fields that should indexed are are listed in the field tab.&lt;/p&gt;
+
+&lt;h3 id=&quot;delete-indexed-documents-and-reindex-in-drupal&quot;&gt;4) Delete Indexed documents and reindex in Drupal&lt;/h3&gt;
+&lt;p&gt;Navigate to &lt;code class=&quot;highlighter-rouge&quot;&gt;admin/config/search/search-api/index/pm_portal&lt;/code&gt; in Drupal.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Click “Clear all indexed data”&lt;/li&gt;
+  &lt;li&gt;Click “Index now” beside ‘Index all items’&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 24 Feb 2017 20:10:00 -0400</pubDate>
+        <link>http://jacobsanford.com/drupal/solr/search_api/search_api_solr/2017/02/24/drupal-search_api_solr-ngram.html</link>
+        <guid isPermaLink="true">http://jacobsanford.com/drupal/solr/search_api/search_api_solr/2017/02/24/drupal-search_api_solr-ngram.html</guid>
+        
+        
+        <category>drupal</category>
+        
+        <category>solr</category>
+        
+        <category>search_api</category>
+        
+        <category>search_api_solr</category>
+        
+      </item>
     
       <item>
         <title>Docker Images, Security, and the New Maintenance Cycle</title>
