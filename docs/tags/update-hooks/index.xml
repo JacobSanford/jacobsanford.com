@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>update hooks on Jacob Sanford</title>
+    <link>http://jacobsanford.com/tags/update-hooks/</link>
+    <description>Recent content in update hooks on Jacob Sanford</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 09 Dec 2018 08:53:56 -0400</lastBuildDate>
+    
+	<atom:link href="http://jacobsanford.com/tags/update-hooks/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Drupal Custom Content Entities: Post-Module-Install Field Changes</title>
+      <link>http://jacobsanford.com/posts/drupal-custom-content-entities-post-installation-field-changes/</link>
+      <pubDate>Sun, 09 Dec 2018 08:53:56 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/drupal-custom-content-entities-post-installation-field-changes/</guid>
+      <description>At some point in their lifecycle, most custom Entities in Drupal will require structural changes.
+Schema evaluation and the provisioning of storage for a custom content Entity occurs automatically only once - when the module that defines that entity is installed. Conversely, a custom content Entity&amp;rsquo;s form structure, elements, and properties are read from the src/Entity/EntityName.php entity definition each time it is rendered. As a result, any schema-changing modifications after module installation will leave a Drupal instance in corrupted limbo: UI/form elements for the Entity no longer synchronized with the previously-installed storage definition.</description>
+    </item>
+    
+  </channel>
+</rss>

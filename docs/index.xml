@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jacob Sanford</title>
+    <link>http://jacobsanford.com/</link>
+    <description>Recent content on Jacob Sanford</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 09 Dec 2018 08:53:56 -0400</lastBuildDate>
+    
+	<atom:link href="http://jacobsanford.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Drupal Custom Content Entities: Post-Module-Install Field Changes</title>
+      <link>http://jacobsanford.com/posts/drupal-custom-content-entities-post-installation-field-changes/</link>
+      <pubDate>Sun, 09 Dec 2018 08:53:56 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/drupal-custom-content-entities-post-installation-field-changes/</guid>
+      <description>At some point in their lifecycle, most custom Entities in Drupal will require structural changes.
+Schema evaluation and the provisioning of storage for a custom content Entity occurs automatically only once - when the module that defines that entity is installed. Conversely, a custom content Entity&amp;rsquo;s form structure, elements, and properties are read from the src/Entity/EntityName.php entity definition each time it is rendered. As a result, any schema-changing modifications after module installation will leave a Drupal instance in corrupted limbo: UI/form elements for the Entity no longer synchronized with the previously-installed storage definition.</description>
+    </item>
+    
+    <item>
+      <title>APLA 2018 Presentation: The Million Image Mountain</title>
+      <link>http://jacobsanford.com/posts/conference-presentation-the-million-image-mountain/</link>
+      <pubDate>Fri, 08 Jun 2018 09:01:00 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/conference-presentation-the-million-image-mountain/</guid>
+      <description>The Million Image Mountain: Challenges Faced Post-Capture in Bulk Digitization
+ Often we consider the challenging portion of a bulk digitization project to be the digital capture process itself: purchasing equipment, allocating staff, and wrangling expertise to capture and curate. What comes next?
+Unfortunately, many unanticipated post-digitization challenges lurk in the annals of our projects: workflow, hardware requirements, surrogate generation and storage. It seems that when facing these challenges, the devil is in the details; and our failure to plan has sometimes been catastrophic.</description>
+    </item>
+    
+    <item>
+      <title>Our Drupal 8 CI Workflow at UNB Libraries</title>
+      <link>http://jacobsanford.com/posts/our-drupal-8-ci-workflow-at-unb-libraries/</link>
+      <pubDate>Thu, 03 May 2018 14:11:30 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/our-drupal-8-ci-workflow-at-unb-libraries/</guid>
+      <description>In 2010, amid a usual morning of manual Drupal module updates, a colleague at UNB Libraries, Kassim Machioudi suggested:
+ Imagine if we only needed to change a version number in a metadata file to push all of these updates?
+ At the time, that idea seemed like a blue-sky dream. We were a small team, running many multisite and standalone instances of Drupal 5&amp;amp;6 across multiple servers. Drush make was not the stable solution it later became.</description>
+    </item>
+    
+    <item>
+      <title>Install PHP7 on OSX</title>
+      <link>http://jacobsanford.com/posts/install-php7-osx/</link>
+      <pubDate>Wed, 02 Aug 2017 14:18:00 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/install-php7-osx/</guid>
+      <description>Ensure you have OSX Sierra EOM
+Install PHP7 curl -s https://php-osx.liip.ch/install.sh | bash -s 7.1  Symlink Minor version into php7 dir sudo ln -s /usr/local/php5-7.1.4-20170506-100436 /usr/local/php7  Add PHP7 To Your Path Fish Shell set --universal fish_user_paths $fish_user_paths /usr/local/php7/bin  Also, you should probably add the path for Bash Shell (below).
+Bash Shell Add /usr/local/php7/bin to /etc/paths.
+Set the proper timezone Edit
+/usr/local/php5/php.d/99-liip-developer.ini  Full Instructions Here</description>
+    </item>
+    
+    <item>
+      <title>DrupalCon Baltimore (2017): Executive Summary</title>
+      <link>http://jacobsanford.com/posts/drupalcon-baltimore-2017-executive-summary/</link>
+      <pubDate>Sun, 30 Apr 2017 18:03:30 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/drupalcon-baltimore-2017-executive-summary/</guid>
+      <description>The following is a portion of an executive summary prepared after Drupalcon, Baltimore in 2017.
+After spending the previous yeah fostering a belief that we are little shop &amp;lsquo;on the edge&amp;rsquo;, DrupalCon never fails to humble me. There are extremely intelligent people doing amazing things in the community, and the opportunity to learn and network with them is invaluable.
+Drupal 8 Surprisingly, the uptake for Drupal 8 in the community is still quite low, despite the numbers that show steady D8 growth.</description>
+    </item>
+    
+    <item>
+      <title>Newrelic PHP Agent MUSL: Latest Download URI</title>
+      <link>http://jacobsanford.com/posts/newrelic-php-agent-musl-latest-download-uri/</link>
+      <pubDate>Wed, 01 Mar 2017 12:01:59 -0300</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/newrelic-php-agent-musl-latest-download-uri/</guid>
+      <description>Newrelic does not provide a &amp;lsquo;latest&amp;rsquo; download URI for the PHP agent. This proves problematic when attempting to inject the agent into PHP container when building in Docker, as version changes will break builds. I have filed a bug to this end:
+https://discuss.newrelic.com/t/stable-latest-php-agent-download-uri/48082
+For now we have implemented a script to accomplish this task.
+#!/usr/bin/env sh set -e # Get latest download URI. NEWRELIC_DOWNLOAD_FILE=$(curl -s http://download.newrelic.com/php_agent/release/ | sed -rn &amp;#39;s/.*(newrelic-php5-[0-9.]+-linux-musl\.tar\.gz).*/\1/p&amp;#39;) NEWRELIC_DOWNLOAD_URI=&amp;#34;http://download.</description>
+    </item>
+    
+    <item>
+      <title>Drupal, search_api_solr and Partial Matches</title>
+      <link>http://jacobsanford.com/posts/drupal-search_api_solr-and-partial-matches/</link>
+      <pubDate>Thu, 10 Nov 2016 08:27:04 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/drupal-search_api_solr-and-partial-matches/</guid>
+      <description>Configuring solr to return partial matches through Drupal&amp;rsquo;s search_api_solr is well documented. In particular, one d.o document is thorough and stands out: Customizing the Solr configuration. It states:
+ First, copy a text type definition to schema_extra_types.xml and change the identifier, as described above. Then, add the following line to the type definition after the first occurrence of &amp;ldquo;solr.SnowballPorterFilterFactory&amp;rdquo; (inside of the element; not after the second occurrence):
+&amp;lt;filter class=&amp;#34;solr.</description>
+    </item>
+    
+    <item>
+      <title>Access 2016 Presentation: Declaring Bankruptcy on Technical Debt</title>
+      <link>http://jacobsanford.com/posts/conference-presentation-declaring-bankruptcy-on-technical-debt/</link>
+      <pubDate>Wed, 05 Oct 2016 11:50:00 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/conference-presentation-declaring-bankruptcy-on-technical-debt/</guid>
+      <description>Declaring Bankruptcy on Technical Debt: Modernizing a Library Systems Infrastructure and Workflow
+   We exist as a very small Library Systems team at the University of New Brunswick Libraries, tasked with maintaining dozens of custom applications, Drupal instances, as well as required to meet a demand for constant new development.
+Several years ago we faced the reality of an un-repayable level of technical debt. The burden from historic organically developed projects, a lack of responsible technical policy and our failure to adopt a standardized architecture had left our team unable to provide an acceptable level of service without a drastic change in how we worked, the tools we worked with, and the projects we developed.</description>
+    </item>
+    
+    <item>
+      <title>Docker Images, Security, and the New Maintenance Cycle</title>
+      <link>http://jacobsanford.com/posts/docker-images-security-and-the-new-maintenance-cycle/</link>
+      <pubDate>Fri, 01 Apr 2016 08:27:04 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/docker-images-security-and-the-new-maintenance-cycle/</guid>
+      <description>Container management and development of a process towards keeping Docker images secure may seem like a daunting task, especially at scale. Stale images lead to security vulnerablities, and this is a very real concern when administrators can let containers run for weeks at a time without updates.
+Like most early adopters, we struggled for some time to adjust our concept of a maintenance cycle within a container-driven paradigm. However, over time, we&amp;rsquo;ve evolved a moderately sane method for keeping our containers up to date and secure:</description>
+    </item>
+    
+    <item>
+      <title>Hodor for Slack</title>
+      <link>http://jacobsanford.com/posts/hodor-for-slack/</link>
+      <pubDate>Sun, 28 Feb 2016 19:11:08 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/hodor-for-slack/</guid>
+      <description>Long awaited fresh updates to the famous Hodor for Slack bot Docker Image. My life&amp;rsquo;s work, it leverages python-rtmbot and python-rtmbot-hodor to monitor any mentions of Hodor&amp;rsquo;s name in a Slack channel and reply with a message:
+Hodor&amp;rsquo;s replies are determined by mood.
+The &amp;lsquo;mood&amp;rsquo; of reply is determined by comparing the content of the triggering message against a library of words and human interpreted intent scoring. After mood assignment, a message is chosen based on a &amp;lsquo;item drop&amp;rsquo; type selection process that allows for weighting of responses.</description>
+    </item>
+    
+    <item>
+      <title>A Solution for boot2docker issue #581?</title>
+      <link>http://jacobsanford.com/posts/solution-for-boot2docker-issue-581/</link>
+      <pubDate>Thu, 18 Feb 2016 08:28:35 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/solution-for-boot2docker-issue-581/</guid>
+      <description>Already discussed to death, boot2docker issue #581 (18 months ago) reported that docker volumes from the OSX disk will not allow writes if the user insider the docker container writing the file isn&amp;rsquo;t root, even with proper ownership set. We&amp;rsquo;ve looked at this before.
+There are several work-arounds proposed, I thought we could investigate the most promising one. The first step, however is to:
+Reproduce the issue On OSX, using the latest version of Docker Toolbox, provision the affected environment:</description>
+    </item>
+    
+    <item>
+      <title>Re-Thinking Workflows : Development and Maintenance of Drupal Instances at Scale</title>
+      <link>http://jacobsanford.com/posts/re-thinking-workflows-development-and-maintenance-of-drupal-instances-at-scale/</link>
+      <pubDate>Thu, 14 Jan 2016 14:33:58 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/re-thinking-workflows-development-and-maintenance-of-drupal-instances-at-scale/</guid>
+      <description>For the past several years, we have been developing and managing a moderate amount of Drupal instances across several VM hosts using a homegrown product we call pushback. It leverages drush in conjunction with Jenkins and gitHub. Why develop a custom framework? Although several products existed [1] [2], none seemed to meet our desire for simplicity and maintainability.
+Pushback was born through discussions with Jen Whitney and Kassim Machioudi, and was inspired by the (now-abandoned) Tugboat project by Lullabot.</description>
+    </item>
+    
+    <item>
+      <title>Deploying a docker-machine to a VMWare VSphere Host</title>
+      <link>http://jacobsanford.com/posts/deploying-a-docker-machine-to-a-vmware-vsphere-host/</link>
+      <pubDate>Mon, 12 Oct 2015 12:32:51 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/deploying-a-docker-machine-to-a-vmware-vsphere-host/</guid>
+      <description>Docker-Machine and VSphere By default, docker-machine on OSX leverages Virtualbox to deploy a Boot2Docker VM to serve as an endpoint for the host docker commands. This configuration satisfies a common use case for development, but does suffer from drawbacks relating to &amp;ldquo;the 3 P&amp;rsquo;s&amp;rdquo; : Performance, Persistence and Permission issues (due to VBoxSF). You can dodge some of these by provisioning Boot2Docker VM on a vSphere managed host, instead of your local computer.</description>
+    </item>
+    
+    <item>
+      <title>Docker Toolbox, OSX, and VirtualBox VBoxSF Permissions</title>
+      <link>http://jacobsanford.com/posts/docker-toolbox-osx-and-virtualbox-vboxsf-permissions/</link>
+      <pubDate>Fri, 17 Jul 2015 08:39:25 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/docker-toolbox-osx-and-virtualbox-vboxsf-permissions/</guid>
+      <description>If you are developing in docker on OSX, chances are you&amp;rsquo;ve run into a situation described by boot2docker issue #581. The issue reports that docker volumes from the OSX disk will not allow writes if the user insider the docker container writing the file isn&amp;rsquo;t root. This has limited effect on casual development, has become an achilles heel for those wanting to use docker as the foundation of a prototype-to-production workflow AND develop on OSX.</description>
+    </item>
+    
+    <item>
+      <title>DrupalCon Los Angeles (2015): Executive Summary</title>
+      <link>http://jacobsanford.com/posts/drupalcon-los-angeles-2015-executive-summary/</link>
+      <pubDate>Thu, 21 May 2015 15:13:30 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/drupalcon-los-angeles-2015-executive-summary/</guid>
+      <description>The following is a brief snippet of an executive summary prepared after Drupalcon, Los Angeles in 2015.
+Ditch our VM Mindset We should step back and re-evaluate our VM-Focused mindset.
+It is no secret that our server usage / computational density is very light, which is is costly and drastically increases our maintenance burden. This is a side effect of standardizing our deployment processes to use one VM per application - particularly with Islandora instances.</description>
+    </item>
+    
+  </channel>
+</rss>

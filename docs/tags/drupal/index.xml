@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>drupal on Jacob Sanford</title>
+    <link>http://jacobsanford.com/tags/drupal/</link>
+    <description>Recent content in drupal on Jacob Sanford</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 09 Dec 2018 08:53:56 -0400</lastBuildDate>
+    
+	<atom:link href="http://jacobsanford.com/tags/drupal/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Drupal Custom Content Entities: Post-Module-Install Field Changes</title>
+      <link>http://jacobsanford.com/posts/drupal-custom-content-entities-post-installation-field-changes/</link>
+      <pubDate>Sun, 09 Dec 2018 08:53:56 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/drupal-custom-content-entities-post-installation-field-changes/</guid>
+      <description>At some point in their lifecycle, most custom Entities in Drupal will require structural changes.
+Schema evaluation and the provisioning of storage for a custom content Entity occurs automatically only once - when the module that defines that entity is installed. Conversely, a custom content Entity&amp;rsquo;s form structure, elements, and properties are read from the src/Entity/EntityName.php entity definition each time it is rendered. As a result, any schema-changing modifications after module installation will leave a Drupal instance in corrupted limbo: UI/form elements for the Entity no longer synchronized with the previously-installed storage definition.</description>
+    </item>
+    
+    <item>
+      <title>Drupal, search_api_solr and Partial Matches</title>
+      <link>http://jacobsanford.com/posts/drupal-search_api_solr-and-partial-matches/</link>
+      <pubDate>Thu, 10 Nov 2016 08:27:04 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/drupal-search_api_solr-and-partial-matches/</guid>
+      <description>Configuring solr to return partial matches through Drupal&amp;rsquo;s search_api_solr is well documented. In particular, one d.o document is thorough and stands out: Customizing the Solr configuration. It states:
+ First, copy a text type definition to schema_extra_types.xml and change the identifier, as described above. Then, add the following line to the type definition after the first occurrence of &amp;ldquo;solr.SnowballPorterFilterFactory&amp;rdquo; (inside of the element; not after the second occurrence):
+&amp;lt;filter class=&amp;#34;solr.</description>
+    </item>
+    
+    <item>
+      <title>Re-Thinking Workflows : Development and Maintenance of Drupal Instances at Scale</title>
+      <link>http://jacobsanford.com/posts/re-thinking-workflows-development-and-maintenance-of-drupal-instances-at-scale/</link>
+      <pubDate>Thu, 14 Jan 2016 14:33:58 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/re-thinking-workflows-development-and-maintenance-of-drupal-instances-at-scale/</guid>
+      <description>For the past several years, we have been developing and managing a moderate amount of Drupal instances across several VM hosts using a homegrown product we call pushback. It leverages drush in conjunction with Jenkins and gitHub. Why develop a custom framework? Although several products existed [1] [2], none seemed to meet our desire for simplicity and maintainability.
+Pushback was born through discussions with Jen Whitney and Kassim Machioudi, and was inspired by the (now-abandoned) Tugboat project by Lullabot.</description>
+    </item>
+    
+    <item>
+      <title>DrupalCon Los Angeles (2015): Executive Summary</title>
+      <link>http://jacobsanford.com/posts/drupalcon-los-angeles-2015-executive-summary/</link>
+      <pubDate>Thu, 21 May 2015 15:13:30 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/drupalcon-los-angeles-2015-executive-summary/</guid>
+      <description>The following is a brief snippet of an executive summary prepared after Drupalcon, Los Angeles in 2015.
+Ditch our VM Mindset We should step back and re-evaluate our VM-Focused mindset.
+It is no secret that our server usage / computational density is very light, which is is costly and drastically increases our maintenance burden. This is a side effect of standardizing our deployment processes to use one VM per application - particularly with Islandora instances.</description>
+    </item>
+    
+  </channel>
+</rss>

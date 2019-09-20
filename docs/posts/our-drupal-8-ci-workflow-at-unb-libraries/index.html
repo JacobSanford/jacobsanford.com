@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.58.3" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Our Drupal 8 CI Workflow at UNB Libraries &middot; Jacob Sanford</title>
+  <meta property="og:title" content="Our Drupal 8 CI Workflow at UNB Libraries" />
+  <meta name="title" content="Our Drupal 8 CI Workflow at UNB Libraries" />
+  <meta property="og:description" content="In 2010, amid a usual morning of manual Drupal module updates, a colleague at UNB Libraries, Kassim Machioudi suggested:
+ Imagine if we only needed to change a version number in a metadata file to push all of these updates?
+ At the time, that idea seemed like a blue-sky dream. We were a small team, running many multisite and standalone instances of Drupal 5&amp;amp;6 across multiple servers. Drush make was not the stable solution it later became." />
+  <meta name="description" content="In 2010, amid a usual morning of manual Drupal module updates, a colleague at UNB Libraries, Kassim Machioudi suggested:
+ Imagine if we only needed to change a version number in a metadata file to push all of these updates?
+ At the time, that idea seemed like a blue-sky dream. We were a small team, running many multisite and standalone instances of Drupal 5&amp;amp;6 across multiple servers. Drush make was not the stable solution it later became." />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <meta name="geo.placename" content="Fredericton" />
+  <meta name="geo.region" content="CA-NB" />
+  <meta property="og:country_name" content="Canada" />
+  <meta property="og:locality" content="Fredericton" />
+  <meta property="og:region" content="New Brunswick" />
+  <meta property="og:site_name" content="JacobSanford.com" />
+  <meta property="og:url" content="http://jacobsanford.com/posts/our-drupal-8-ci-workflow-at-unb-libraries/" />
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://jacobsanford.com/">
+        <img class="portrait" src="https://avatars0.githubusercontent.com/u/244894?s=460&v=4" itemprop="image" alt="Jacob Sanford">
+      </a>
+      <a href="http://jacobsanford.com/"><h1>Jacob Sanford</h1></a>
+      <p class="lead">
+        Senior Technical Operations Manager <a href='https://lib.unb.ca' target='_blank'>@UNBLibraries</a>. DevOps, k8s, workflows, and Drupal enthusiast.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://jacobsanford.com/">Home</a> </li>
+        <li><a href="/posts/"> Posts </a></li>
+      </ul>
+    </nav>
+
+    <nav>
+      Post Topics:
+      <ul class="topic-list">
+          
+                  <li><a href="http://jacobsanford.com/tags/docker/">docker</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/drupal/">drupal</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/osx/">osx</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/boot2docker/">boot2docker</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/drupal-8/">drupal 8</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/drupalcon/">drupalcon</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/presentations/">presentations</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/workflow/">workflow</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/cargodock/">cargodock</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/ci/">ci</a></li>
+          
+      </ul>
+
+      <span class='navlabel'>Contact:</span>
+      <ul class="network-icon" aria-hidden="true">
+        <li>
+          <a itemprop="sameAs" href="mailto:jsanford@unb.ca" target="_blank" rel="noopener">
+            <i class="fa fa-envelope big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="//github.com/JacobSanford" target="_blank" rel="noopener">
+            <i class="fa fa-github big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="//www.drupal.org/u/jacobsanford" target="_blank" rel="noopener">
+            <i class="fa fa-drupal big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="https://www.linkedin.com/in/jacob-sanford-5762bb63/" target="_blank" rel="noopener">
+            <i class="fa fa-linkedin big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="https://scholar.google.com/citations?user=aN0xvUYAAAAJ" target="_blank" rel="noopener">
+            <i class="ai ai-google-scholar big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="//twitter.com/JacobSanfo" target="_blank" rel="noopener">
+            <i class="fa fa-twitter big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="#" target="_blank" rel="noopener">
+            <i class="fa icon fa icon-applications big-icon"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2019. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    
+    <span>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">/ <a href="/">Home</a></li>
+        
+          
+              
+                  
+              
+          
+              
+                  
+                      <li class="breadcrumb-item">/ <a href="/posts">Posts</a></li>
+                  
+              
+          
+              
+                  
+                      <li class="breadcrumb-item">/ Our Drupal 8 CI Workflow at UNB Libraries</li>
+                  
+              
+          
+              
+                  
+              
+          
+        
+        </ol>
+    </span>
+
+
+
+
+
+<div class="post">
+  <h1>Our Drupal 8 CI Workflow at UNB Libraries</h1>
+  <span class="post-author">Jacob Sanford</span>
+  <time datetime=2018-05-03T14:11:30-0400 class="post-date">Thu, May 3, 2018</time>
+
+  
+
+<p>In 2010, amid a usual morning of manual Drupal module updates, a colleague at <a href="https://www.lib.unb.ca/">UNB Libraries</a>, <a href="https://github.com/kaschioudi">Kassim Machioudi</a> suggested:</p>
+
+<blockquote>
+<p>Imagine if we only needed to change a version number in a metadata file to push all of these updates?</p>
+</blockquote>
+
+<p>At the time, that idea seemed like a blue-sky dream. We were a small team, running many multisite and standalone instances of Drupal 5&amp;6 across multiple servers. Drush make was not the stable solution it later became. Composer had not yet been released. For our team, module and core updates were painful - our update process consisted of extracting module and core tarballs on top of the existing live Drupal tree.</p>
+
+<p>Most of our pain, however, wasn&rsquo;t from the labour of doing the updates themselves - rather the problems that arose from doing the updates. When something went wrong, it <strong>went very wrong</strong> - we had no dev server, rollbacks were achieved only from nightly tape backups, and our local development environments were (at best) XAMP/Local Apache, and (usually) the live server itself.</p>
+
+<h2 id="necessary-changes">Necessary Changes</h2>
+
+<p>Although version updates were a clear pain point, there were other pain points as well - most stemming from the the organic evolution of how we originally adopted and worked with Drupal. It wasn&rsquo;t that our workflow was broken - rather that we really had not designed a workflow at all. We were highly motivated to change that. We needed a to improve.</p>
+
+<p>For the sake of brevity, a detailed history of our tooling changes is not included in this main document. If you are interested in such things, the steps we took and tools we adopted in the following 8 years.</p>
+
+<h2 id="goals">Goals</h2>
+
+<p>Great projects begin with defined goals. After a lengthy discussion, we proposed some blue-sky goals for the new workflow:</p>
+
+<h3 id="general">General</h3>
+
+<ul>
+<li>MIT Licensed, open lean instance repositories. Anyone can deploy and bring up our applications.</li>
+<li>Track upstream libraries in metadata only, not in lean repositories.</li>
+<li>Three layers of instance testing : Unit, Behat and Visual Regression Tests.</li>
+</ul>
+
+<h3 id="code">Code</h3>
+
+<ul>
+<li>Deployment environments defined by branches - beginning with dev and production.</li>
+<li>Synchronized branches - commits rebased upstream through environments.</li>
+</ul>
+
+<h3 id="deployment">Deployment</h3>
+
+<ul>
+<li>Instances tested automatically prior to deployment.</li>
+<li>Secrets stored in orchestration layer.</li>
+</ul>
+
+<h3 id="developer-experience">Developer Experience</h3>
+
+<ul>
+<li>Local development instances that approach parity with production instances.</li>
+<li>Minimal local development tool installation.</li>
+<li>A developer workflow that requires as little knowledge of Docker / underlying tools as possible.</li>
+<li>Lightning fast local development kickstarts.</li>
+</ul>
+
+<h2 id="result">Result</h2>
+
+<p>The resultant workflow is documented in the <a href="https://github.com/JacobSanford/drupal-8-ci-workflow">Drupal 8 CI Workflow</a> GitHub repository. Although currently a work in process, it outlines the details of how we work with Drupal 8, Travis and GitHub.</p>
+
+   
+Post Tags:
+<ul class="tag-list" id="tags">
+    
+        
+        
+            <li><a href="http://jacobsanford.com/tags/drupal-8/">drupal 8</a></li>
+        
+    
+        
+        
+            <li><a href="http://jacobsanford.com/tags/kubernetes/">kubernetes</a></li>
+        
+    
+        
+        
+            <li><a href="http://jacobsanford.com/tags/workflows/">workflows</a></li>
+        
+    
+        
+        
+            <li><a href="http://jacobsanford.com/tags/cargodock/">cargodock</a></li>
+        
+    
+</ul>
+
+</div>
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jacobsanford" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-21448090-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

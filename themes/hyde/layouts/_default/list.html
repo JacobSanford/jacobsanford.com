@@ -1,0 +1,15 @@
+{{ define "main" -}}
+{{ partial "breadcrumbs.html" . }}
+
+<h2>All Posts</h2>
+
+<ul class="posts">
+{{ range .Data.Pages -}}
+  <li>
+    <span><a href="{{ .Permalink }}">{{ .Title }}</a>
+    - <time class="post-list-time">{{ .Date.Format "Mon, Jan 2, 2006" }}</time>
+    </span>
+  </li>
+{{- end }}
+</ul>
+{{- end }}

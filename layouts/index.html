@@ -1,0 +1,68 @@
+{{ define "main" }}
+{{ partial "breadcrumbs.html" . }}
+<main>
+  <div>
+   <h1>Introduction</h1>
+    <p>I am the Senior Technical Operations Manager at <a href='https://lib.unb.ca' target='_blank'>UNB Libraries</a>. I create workflows and find solutions to develop, deploy, and maintain web applications built on modern frameworks efficiently.</p>
+    <p>I have a particular interest in Developer Experience, and strive to create workflows that allow developers to work quickly and consistently, focusing their time and efforts on the challenges of the project (not the development environment or application infrastructure).</p>
+    <p>I am a FOSS and (in particular) <a href='https://www.drupal.org' target='_blank'>Drupal</a> Evangelist. Our primary ramework at UNB Libraries is Drupal, and I have been active on Drupal.org since 2010. In that time, I have contributed to Drupal modules (including Drupal core), and worked in my spare time with various agencies (including <a href='https://www.acquia.com/' target='_blank'>Acquia</a>) towards the development of large scale Drupal Applications. For details about my Drupal project contributions, please visit my <a href='https://www.drupal.org/u/jacobsanford' target='_blank'>d.o. profile</a>.</p>
+    <p>I believe strongly in the open data movement and feel that education should not be restricted to those who can afford formal training. In that vein, I am proud of the accomplishments of our team at UNB Libraries in the area of dissemination of open academic knowledge and research data. I am particularly proud of how our work is <a href='https://github.com/unb-libraries/lib.unb.ca' target='_blank'>published and licensed</a> under a strong commitment to making as much of our development/workflow as possible freely available.</p>
+
+    <div class="row">
+      <div class="col-sm-5">
+        <h3>Recent Posts</h3>
+        <ul>
+          {{range first 10 .Site.RegularPages}}
+            <li>
+                <a href="{{ .Permalink }}">{{ .Title }}</a>
+                - <time class="post-list-time">{{ .Date.Format "Mon, Jan 2, 2006" }}</time>
+            </li>
+          {{ end }}
+        </ul>
+      </div>
+
+      <div class="col-sm-5">
+        <h3>Strengths / Interests</h3>
+        <ul class="ul-skills">
+          <li>Technical Communication
+            <ul>
+              <li>Technical project planning, requirements gathering</li>
+              <li>Requirements distillation into issue/task management systems</li>
+              <li>Contribution reviews - patch/code reviews, progress</li>
+              <li>Clear, concise technical writing</li>
+            </ul>
+          </li>
+          <li>Developer Experience
+            <ul>
+              <li>'Single command' provisioning of development environments</li>
+              <li>A unified cross-platform development experience</li>
+            </ul>
+          </li>
+          <li>Container Based Infrastructures
+            <ul>
+              <li>Local bare-metal kubernetes clusters</li>
+            </ul>
+          </li>
+        </ul>
+        </ul>
+        </ul>
+      </div>
+
+      <div class="col-sm-5">
+        <h3>Formal Education</h3>
+        <ul class="ul-edu fa-ul">
+          <li>
+            <i class="fa-li fa fa-graduation-cap"></i>
+            <div class="description">
+              <p class="course">Ph.D. - Physical (Computational) Chemistry <a href='https://www.unb.ca' target='_blank'>University of New Brunswick</a> (2007)</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+{{ end }}

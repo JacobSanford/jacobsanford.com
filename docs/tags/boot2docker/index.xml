@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>boot2docker on Jacob Sanford</title>
+    <link>http://jacobsanford.com/tags/boot2docker/</link>
+    <description>Recent content in boot2docker on Jacob Sanford</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 18 Feb 2016 08:28:35 -0400</lastBuildDate>
+    
+	<atom:link href="http://jacobsanford.com/tags/boot2docker/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>A Solution for boot2docker issue #581?</title>
+      <link>http://jacobsanford.com/posts/solution-for-boot2docker-issue-581/</link>
+      <pubDate>Thu, 18 Feb 2016 08:28:35 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/solution-for-boot2docker-issue-581/</guid>
+      <description>Already discussed to death, boot2docker issue #581 (18 months ago) reported that docker volumes from the OSX disk will not allow writes if the user insider the docker container writing the file isn&amp;rsquo;t root, even with proper ownership set. We&amp;rsquo;ve looked at this before.
+There are several work-arounds proposed, I thought we could investigate the most promising one. The first step, however is to:
+Reproduce the issue On OSX, using the latest version of Docker Toolbox, provision the affected environment:</description>
+    </item>
+    
+    <item>
+      <title>Docker Toolbox, OSX, and VirtualBox VBoxSF Permissions</title>
+      <link>http://jacobsanford.com/posts/docker-toolbox-osx-and-virtualbox-vboxsf-permissions/</link>
+      <pubDate>Fri, 17 Jul 2015 08:39:25 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/docker-toolbox-osx-and-virtualbox-vboxsf-permissions/</guid>
+      <description>If you are developing in docker on OSX, chances are you&amp;rsquo;ve run into a situation described by boot2docker issue #581. The issue reports that docker volumes from the OSX disk will not allow writes if the user insider the docker container writing the file isn&amp;rsquo;t root. This has limited effect on casual development, has become an achilles heel for those wanting to use docker as the foundation of a prototype-to-production workflow AND develop on OSX.</description>
+    </item>
+    
+  </channel>
+</rss>

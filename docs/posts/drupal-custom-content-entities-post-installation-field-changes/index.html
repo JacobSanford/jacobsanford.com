@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.58.3" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Drupal Custom Content Entities: Post-Module-Install Field Changes &middot; Jacob Sanford</title>
+  <meta property="og:title" content="Drupal Custom Content Entities: Post-Module-Install Field Changes" />
+  <meta name="title" content="Drupal Custom Content Entities: Post-Module-Install Field Changes" />
+  <meta property="og:description" content="At some point in their lifecycle, most custom Entities in Drupal will require structural changes.
+Schema evaluation and the provisioning of storage for a custom content Entity occurs automatically only once - when the module that defines that entity is installed. Conversely, a custom content Entity&amp;rsquo;s form structure, elements, and properties are read from the src/Entity/EntityName.php entity definition each time it is rendered. As a result, any schema-changing modifications after module installation will leave a Drupal instance in corrupted limbo: UI/form elements for the Entity no longer synchronized with the previously-installed storage definition." />
+  <meta name="description" content="At some point in their lifecycle, most custom Entities in Drupal will require structural changes.
+Schema evaluation and the provisioning of storage for a custom content Entity occurs automatically only once - when the module that defines that entity is installed. Conversely, a custom content Entity&amp;rsquo;s form structure, elements, and properties are read from the src/Entity/EntityName.php entity definition each time it is rendered. As a result, any schema-changing modifications after module installation will leave a Drupal instance in corrupted limbo: UI/form elements for the Entity no longer synchronized with the previously-installed storage definition." />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <meta name="geo.placename" content="Fredericton" />
+  <meta name="geo.region" content="CA-NB" />
+  <meta property="og:country_name" content="Canada" />
+  <meta property="og:locality" content="Fredericton" />
+  <meta property="og:region" content="New Brunswick" />
+  <meta property="og:site_name" content="JacobSanford.com" />
+  <meta property="og:url" content="http://jacobsanford.com/posts/drupal-custom-content-entities-post-installation-field-changes/" />
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://jacobsanford.com/">
+        <img class="portrait" src="https://avatars0.githubusercontent.com/u/244894?s=460&v=4" itemprop="image" alt="Jacob Sanford">
+      </a>
+      <a href="http://jacobsanford.com/"><h1>Jacob Sanford</h1></a>
+      <p class="lead">
+        Senior Technical Operations Manager <a href='https://lib.unb.ca' target='_blank'>@UNBLibraries</a>. DevOps, k8s, workflows, and Drupal enthusiast.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://jacobsanford.com/">Home</a> </li>
+        <li><a href="/posts/"> Posts </a></li>
+      </ul>
+    </nav>
+
+    <nav>
+      Post Topics:
+      <ul class="topic-list">
+          
+                  <li><a href="http://jacobsanford.com/tags/docker/">docker</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/drupal/">drupal</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/osx/">osx</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/boot2docker/">boot2docker</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/drupal-8/">drupal 8</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/drupalcon/">drupalcon</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/presentations/">presentations</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/workflow/">workflow</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/cargodock/">cargodock</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/ci/">ci</a></li>
+          
+      </ul>
+
+      <span class='navlabel'>Contact:</span>
+      <ul class="network-icon" aria-hidden="true">
+        <li>
+          <a itemprop="sameAs" href="mailto:jsanford@unb.ca" target="_blank" rel="noopener">
+            <i class="fa fa-envelope big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="//github.com/JacobSanford" target="_blank" rel="noopener">
+            <i class="fa fa-github big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="//www.drupal.org/u/jacobsanford" target="_blank" rel="noopener">
+            <i class="fa fa-drupal big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="https://www.linkedin.com/in/jacob-sanford-5762bb63/" target="_blank" rel="noopener">
+            <i class="fa fa-linkedin big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="https://scholar.google.com/citations?user=aN0xvUYAAAAJ" target="_blank" rel="noopener">
+            <i class="ai ai-google-scholar big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="//twitter.com/JacobSanfo" target="_blank" rel="noopener">
+            <i class="fa fa-twitter big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="#" target="_blank" rel="noopener">
+            <i class="fa icon fa icon-applications big-icon"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2019. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    
+    <span>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">/ <a href="/">Home</a></li>
+        
+          
+              
+                  
+              
+          
+              
+                  
+                      <li class="breadcrumb-item">/ <a href="/posts">Posts</a></li>
+                  
+              
+          
+              
+                  
+                      <li class="breadcrumb-item">/ Drupal Custom Content Entities: Post-Module-Install Field Changes</li>
+                  
+              
+          
+              
+                  
+              
+          
+        
+        </ol>
+    </span>
+
+
+
+
+
+<div class="post">
+  <h1>Drupal Custom Content Entities: Post-Module-Install Field Changes</h1>
+  <span class="post-author">Jacob Sanford</span>
+  <time datetime=2018-12-09T08:53:56-0400 class="post-date">Sun, Dec 9, 2018</time>
+
+  
+
+<p>At some point in their lifecycle, most custom Entities in Drupal will require structural changes.</p>
+
+<p>Schema evaluation and the provisioning of storage for a custom content Entity occurs automatically only once - when the module that defines that entity is installed. Conversely, a custom content Entity&rsquo;s form structure, elements, and properties are read from the <code>src/Entity/EntityName.php</code> entity definition each time it is rendered. As a result, any schema-changing modifications after module installation will leave a Drupal instance in corrupted limbo: UI/form elements for the Entity no longer synchronized with the previously-installed storage definition.</p>
+
+<h3 id="drush-entup">drush entup</h3>
+
+<p>Drush&rsquo;s provides <code>entup</code> as a simple to use mechanism to automatically update entities after schema without destroying existing content. It is an excellent tool for development environments, where content is usually disposable. Relying on <code>drush entup</code> in a production is <em>asking for a catastrophe</em>, as it provides no architecture to specify how to crosswalk data types and can easily lead to corrupted data in production after even simple schema changes.</p>
+
+<h3 id="hook-update">hook_update()</h3>
+
+<p>When changing existing entity field definitions in production, the safe method to migrate field data is to use hook_update() to explicitly control the data crosswalk. Specifically:</p>
+
+<ul>
+<li>Modify the Entity definition in <code>src/Entity/EntityName.php</code></li>
+<li>Implement hook_update() to perform the specific schema/storage changes for sites that have previously installed the module.</li>
+</ul>
+
+<p>Although not as simple as <code>drush entup</code>, this process is the <a href="https://www.drupal.org/node/2554097#change-field-schema">recommended method to change existing field types on d.o.</a>.</p>
+
+<h2 id="example">Example</h2>
+
+<p>Information on implementing hook_update() in a module <a href="https://www.drupal.org/docs/7/creating-custom-modules/howtos/examples-for-database-update-scripts-using-hook_update_n-how">is available on d.o</a>. A topical implementation that removes a field from an entity:</p>
+
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PHP" data-lang="PHP">function modulename_update_8001() {
+  $update_manager = Drupal::service(&#39;entity.definition_update_manager&#39;);
+  $definition = $update_manager-&gt;getFieldStorageDefinition(&#39;fieldname&#39;, &#39;entity_id&#39;);
+  $update_manager-&gt;uninstallFieldStorageDefinition($definition);
+  return t(&#39;Entity: field was uninstalled&#39;);
+}</code></pre></div>
+<div class="externalref">
+  <span class="reflabel">Reference:</span>
+  <span class="reflink">
+    <a href="https://techblog.stefan-korn.de/content/remove-base-field-custom-content-entity-drupal-8">https://techblog.stefan-korn.de/content/remove-base-field-custom-content-entity-drupal-8</a>
+  </span>
+</div>
+</p>
+
+<h2 id="content-entity-schema-storage-changes-other-operations">Content Entity Schema/Storage Changes : Other Operations</h2>
+
+<h3 id="remove-an-existing-field-from-custom-content-entities">Remove an Existing Field From Custom Content Entities</h3>
+
+<p>The Entity Definition Update Manager provides the method <a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Entity%21EntityDefinitionUpdateManagerInterface.php/function/EntityDefinitionUpdateManagerInterface%3A%3AuninstallFieldStorageDefinition/8.2.x">uninstallFieldStorageDefinition()</a>, which can be leveraged to delete a field&rsquo;s existing storage definition for a custom entity:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PHP" data-lang="PHP">$update_manager = Drupal::service(&#39;entity.definition_update_manager&#39;);
+$definition = $update_manager-&gt;getFieldStorageDefinition(&#39;fieldname&#39;, &#39;entity_id&#39;);
+$update_manager-&gt;uninstallFieldStorageDefinition($definition);</code></pre></div></p>
+
+<h3 id="add-a-field-to-custom-content-entities">Add a Field to Custom Content Entities</h3>
+
+<p>The Entity Definition Update Manager provides the method <a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Entity%21EntityDefinitionUpdateManagerInterface.php/function/EntityDefinitionUpdateManagerInterface%3A%3AinstallFieldStorageDefinition/8.2.x">installFieldStorageDefinition()</a>, which can be leveraged to add the new field storage definition for a custom entity.</p>
+
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PHP" data-lang="PHP">$definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+
+  // Add the publishing status field to the block_content entity type.
+$status = BaseFieldDefinition::create(&#39;boolean&#39;)
+-&gt;setLabel(new TranslatableMarkup(&#39;Publishing status&#39;))
+-&gt;setDescription(new TranslatableMarkup(&#39;A boolean indicating the published state.&#39;))
+-&gt;setRevisionable(TRUE)
+-&gt;setTranslatable(TRUE)
+-&gt;setDefaultValue(TRUE);
+$has_content_translation_status_field = $definition_update_manager
+-&gt;getFieldStorageDefinition(&#39;content_translation_status&#39;, &#39;block_content&#39;);
+if ($has_content_translation_status_field) {
+$status
+-&gt;setInitialValueFromField(&#39;content_translation_status&#39;, TRUE);
+}
+else {
+  $status
+    -&gt;setInitialValue(TRUE);
+}
+$definition_update_manager
+  -&gt;installFieldStorageDefinition(&#39;status&#39;, &#39;block_content&#39;, &#39;block_content&#39;, $status);</code></pre></div>
+<div class="externalref">
+  <span class="reflabel">Reference:</span>
+  <span class="reflink">
+    <a href="https://api.drupal.org/api/drupal/core%21modules%21block_content%21block_content.install/function/block_content_update_8400/8.5.x">https://api.drupal.org/api/drupal/core%21modules%21block_content%21block_content.install/function/block_content_update_8400/8.5.x</a>
+  </span>
+</div>
+</p>
+
+<h3 id="change-field-types-in-custom-content-entities">Change Field Types in Custom Content Entities</h3>
+
+<p>Changing the type of a custom Entity field is a more complex operation. At the core of the complexity: cross-walking data between the old field type into the new.</p>
+
+<p>To illustrate this: imagine a module maintainer needed to change a string type field into a Taxonomy term reference field. Cross-walking the data requires the creation of the new taxonomy term Entities while considering duplication, string case, whitespace, and equivalencies in the existing field data.</p>
+
+<p>A generalized list of steps for most field type change operations:</p>
+
+<ul>
+<li>Read all field data into non-database storage.</li>
+<li>Iterate over this new storage, and perform any operations required to convert that field&rsquo;s data into the new type.</li>
+<li>Remove the field from the custom entity.</li>
+<li>Create the new desired field on the custom entity.</li>
+<li>Iterate over the non-database storage and insert each item as a new value.</li>
+</ul>
+
+<p>Case study: maintainers of the <a href="https://www.drupal.org/project/fillpdf">fillpdf</a> module needed to convert an <em>entity reference</em> field to a <em>file</em> field. Their hook_update() implementation follows:</p>
+
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PHP" data-lang="PHP">$definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+$entity_manager = \Drupal::entityManager();
+$db = \Drupal::database();
+
+$form_file_def = BaseFieldDefinition::create(&#39;file&#39;)
+  -&gt;setLabel(t(&#39;The associated managed file.&#39;))
+  -&gt;setDescription(t(&#39;The associated managed file.&#39;))
+  -&gt;setName(&#39;file&#39;)
+  -&gt;setProvider(&#39;fillpdf_form&#39;)
+  -&gt;setTargetBundle(NULL)
+  -&gt;setTargetEntityTypeId(&#39;fillpdf_form&#39;);
+
+$fc_file_def = BaseFieldDefinition::create(&#39;file&#39;)
+  -&gt;setLabel(t(&#39;The associated managed file.&#39;))
+  -&gt;setDescription(t(&#39;The associated managed file.&#39;))
+  -&gt;setName(&#39;file&#39;)
+  -&gt;setProvider(&#39;fillpdf_file_context&#39;)
+  -&gt;setTargetBundle(NULL)
+  -&gt;setTargetEntityTypeId(&#39;fillpdf_file_context&#39;);
+
+// Save existing data.
+$form_files = $db-&gt;select(&#39;fillpdf_forms&#39;, &#39;ff&#39;)
+  -&gt;fields(&#39;ff&#39;, [&#39;fid&#39;, &#39;file&#39;])
+  -&gt;execute()
+  -&gt;fetchAllKeyed();
+
+$fc_files = $db-&gt;select(&#39;fillpdf_file_context&#39;, &#39;fc&#39;)
+  -&gt;fields(&#39;fc&#39;, [&#39;id&#39;, &#39;file&#39;])
+  -&gt;execute()
+  -&gt;fetchAllKeyed();
+
+// Remove data from the storage.
+$db-&gt;update(&#39;fillpdf_forms&#39;)
+  -&gt;fields([&#39;file&#39; =&gt; NULL])
+  -&gt;execute();
+
+$db-&gt;update(&#39;fillpdf_file_context&#39;)
+  -&gt;fields([&#39;file&#39; =&gt; NULL])
+  -&gt;execute();
+
+// Now install the new field definitions.
+$definition_update_manager-&gt;updateFieldStorageDefinition($form_file_def);
+$definition_update_manager-&gt;updateFieldStorageDefinition($fc_file_def);
+
+foreach ($form_files as $entity_id =&gt; $fillpdf_form_file) {
+  $entity = $entity_manager-&gt;getStorage(&#39;fillpdf_form&#39;)-&gt;load($entity_id);
+  $entity-&gt;file-&gt;target_id = $fillpdf_form_file;
+  $entity-&gt;save();
+}
+
+foreach ($fc_files as $entity_id =&gt; $ffcf) {
+  $entity = $entity_manager-&gt;getStorage(&#39;fillpdf_file_context&#39;)-&gt;load($entity_id);
+  $entity-&gt;file-&gt;target_id = $ffcf;
+  $entity-&gt;save();
+}</code></pre></div>
+<div class="externalref">
+  <span class="reflabel">Reference:</span>
+  <span class="reflink">
+    <a href="https://git.drupalcode.org/project/fillpdf/blob/8.x-4.x/fillpdf.install">https://git.drupalcode.org/project/fillpdf/blob/8.x-4.x/fillpdf.install</a>
+  </span>
+</div>
+</p>
+
+<p>It is important to note that the above snippet <em>risks loss of data</em>, as it stores the original field values in memory as a local PHP array. Any exceptions that occur within the update hook may leave the update in a unrecoverable state. You may consider leveraging an external data store and database transactions to make the update data-safe.</p>
+
+<h3 id="change-a-property-of-a-custom-content-entity-s-field-i-e-length">Change a Property of a Custom Content Entity&rsquo;s Field (i.e. Length)</h3>
+
+<p>The operation list for changing the property of a custom entity&rsquo;s field is similar to changing type.</p>
+
+<p>A generalized list of steps for most field property change operations:</p>
+
+<ul>
+<li>Read all field data into non-database storage.</li>
+<li>Iterate over this new storage, and audit/perform any operations required to convert that field&rsquo;s data to fit the new property.</li>
+<li>Remove the field from the custom entity.</li>
+<li>Create the new desired field on the custom entity.</li>
+<li>Iterate over the non-database storage and insert each item as a new value.</li>
+</ul>
+
+<p>The snippet for this operation would be similar to that of changing it&rsquo;s type. See above.</p>
+
+   
+Post Tags:
+<ul class="tag-list" id="tags">
+    
+        
+        
+            <li><a href="http://jacobsanford.com/tags/drupal/">drupal</a></li>
+        
+    
+        
+        
+            <li><a href="http://jacobsanford.com/tags/custom-entities/">custom entities</a></li>
+        
+    
+        
+        
+            <li><a href="http://jacobsanford.com/tags/update-hooks/">update hooks</a></li>
+        
+    
+</ul>
+
+</div>
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jacobsanford" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-21448090-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

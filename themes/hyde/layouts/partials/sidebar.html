@@ -1,0 +1,72 @@
+<aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="{{ .Site.BaseURL }}">
+        <img class="portrait" src="https://avatars0.githubusercontent.com/u/244894?s=460&v=4" itemprop="image" alt="Jacob Sanford">
+      </a>
+      <a href="{{ .Site.BaseURL }}"><h1>{{ .Site.Title }}</h1></a>
+      <p class="lead">
+        Senior Technical Operations Manager <a href='https://lib.unb.ca' target='_blank'>@UNBLibraries</a>. DevOps, k8s, workflows, and Drupal enthusiast.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="{{ .Site.BaseURL }}">Home</a> </li>
+        {{ range .Site.Menus.main -}}
+          <li><a href="{{.URL}}"> {{ .Name }} </a></li>
+        {{- end }}
+      </ul>
+    </nav>
+
+    <nav>
+      Post Topics:
+      <ul class="topic-list">
+          {{ range first 10 .Site.Taxonomies.tags.ByCount }}
+                  <li><a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a></li>
+          {{ end }}
+      </ul>
+
+      <span class='navlabel'>Contact:</span>
+      <ul class="network-icon" aria-hidden="true">
+        <li>
+          <a itemprop="sameAs" href="mailto:jsanford@unb.ca" target="_blank" rel="noopener">
+            <i class="fa fa-envelope big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="//github.com/JacobSanford" target="_blank" rel="noopener">
+            <i class="fa fa-github big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="//www.drupal.org/u/jacobsanford" target="_blank" rel="noopener">
+            <i class="fa fa-drupal big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="https://www.linkedin.com/in/jacob-sanford-5762bb63/" target="_blank" rel="noopener">
+            <i class="fa fa-linkedin big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="https://scholar.google.com/citations?user=aN0xvUYAAAAJ" target="_blank" rel="noopener">
+            <i class="ai ai-google-scholar big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="//twitter.com/JacobSanfo" target="_blank" rel="noopener">
+            <i class="fa fa-twitter big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="#" target="_blank" rel="noopener">
+            <i class="fa icon fa icon-applications big-icon"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <p>{{ with .Site.Params.copyright }}{{.}}{{ else }}&copy; {{ now.Format "2006"}}. All rights reserved. {{end}}</p>
+  </div>
+</aside>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>docker on Jacob Sanford</title>
+    <link>http://jacobsanford.com/tags/docker/</link>
+    <description>Recent content in docker on Jacob Sanford</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 01 Mar 2017 12:01:59 -0300</lastBuildDate>
+    
+	<atom:link href="http://jacobsanford.com/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Newrelic PHP Agent MUSL: Latest Download URI</title>
+      <link>http://jacobsanford.com/posts/newrelic-php-agent-musl-latest-download-uri/</link>
+      <pubDate>Wed, 01 Mar 2017 12:01:59 -0300</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/newrelic-php-agent-musl-latest-download-uri/</guid>
+      <description>Newrelic does not provide a &amp;lsquo;latest&amp;rsquo; download URI for the PHP agent. This proves problematic when attempting to inject the agent into PHP container when building in Docker, as version changes will break builds. I have filed a bug to this end:
+https://discuss.newrelic.com/t/stable-latest-php-agent-download-uri/48082
+For now we have implemented a script to accomplish this task.
+#!/usr/bin/env sh set -e # Get latest download URI. NEWRELIC_DOWNLOAD_FILE=$(curl -s http://download.newrelic.com/php_agent/release/ | sed -rn &amp;#39;s/.*(newrelic-php5-[0-9.]+-linux-musl\.tar\.gz).*/\1/p&amp;#39;) NEWRELIC_DOWNLOAD_URI=&amp;#34;http://download.</description>
+    </item>
+    
+    <item>
+      <title>Docker Images, Security, and the New Maintenance Cycle</title>
+      <link>http://jacobsanford.com/posts/docker-images-security-and-the-new-maintenance-cycle/</link>
+      <pubDate>Fri, 01 Apr 2016 08:27:04 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/docker-images-security-and-the-new-maintenance-cycle/</guid>
+      <description>Container management and development of a process towards keeping Docker images secure may seem like a daunting task, especially at scale. Stale images lead to security vulnerablities, and this is a very real concern when administrators can let containers run for weeks at a time without updates.
+Like most early adopters, we struggled for some time to adjust our concept of a maintenance cycle within a container-driven paradigm. However, over time, we&amp;rsquo;ve evolved a moderately sane method for keeping our containers up to date and secure:</description>
+    </item>
+    
+    <item>
+      <title>Hodor for Slack</title>
+      <link>http://jacobsanford.com/posts/hodor-for-slack/</link>
+      <pubDate>Sun, 28 Feb 2016 19:11:08 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/hodor-for-slack/</guid>
+      <description>Long awaited fresh updates to the famous Hodor for Slack bot Docker Image. My life&amp;rsquo;s work, it leverages python-rtmbot and python-rtmbot-hodor to monitor any mentions of Hodor&amp;rsquo;s name in a Slack channel and reply with a message:
+Hodor&amp;rsquo;s replies are determined by mood.
+The &amp;lsquo;mood&amp;rsquo; of reply is determined by comparing the content of the triggering message against a library of words and human interpreted intent scoring. After mood assignment, a message is chosen based on a &amp;lsquo;item drop&amp;rsquo; type selection process that allows for weighting of responses.</description>
+    </item>
+    
+    <item>
+      <title>A Solution for boot2docker issue #581?</title>
+      <link>http://jacobsanford.com/posts/solution-for-boot2docker-issue-581/</link>
+      <pubDate>Thu, 18 Feb 2016 08:28:35 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/solution-for-boot2docker-issue-581/</guid>
+      <description>Already discussed to death, boot2docker issue #581 (18 months ago) reported that docker volumes from the OSX disk will not allow writes if the user insider the docker container writing the file isn&amp;rsquo;t root, even with proper ownership set. We&amp;rsquo;ve looked at this before.
+There are several work-arounds proposed, I thought we could investigate the most promising one. The first step, however is to:
+Reproduce the issue On OSX, using the latest version of Docker Toolbox, provision the affected environment:</description>
+    </item>
+    
+    <item>
+      <title>Deploying a docker-machine to a VMWare VSphere Host</title>
+      <link>http://jacobsanford.com/posts/deploying-a-docker-machine-to-a-vmware-vsphere-host/</link>
+      <pubDate>Mon, 12 Oct 2015 12:32:51 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/deploying-a-docker-machine-to-a-vmware-vsphere-host/</guid>
+      <description>Docker-Machine and VSphere By default, docker-machine on OSX leverages Virtualbox to deploy a Boot2Docker VM to serve as an endpoint for the host docker commands. This configuration satisfies a common use case for development, but does suffer from drawbacks relating to &amp;ldquo;the 3 P&amp;rsquo;s&amp;rdquo; : Performance, Persistence and Permission issues (due to VBoxSF). You can dodge some of these by provisioning Boot2Docker VM on a vSphere managed host, instead of your local computer.</description>
+    </item>
+    
+    <item>
+      <title>Docker Toolbox, OSX, and VirtualBox VBoxSF Permissions</title>
+      <link>http://jacobsanford.com/posts/docker-toolbox-osx-and-virtualbox-vboxsf-permissions/</link>
+      <pubDate>Fri, 17 Jul 2015 08:39:25 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/docker-toolbox-osx-and-virtualbox-vboxsf-permissions/</guid>
+      <description>If you are developing in docker on OSX, chances are you&amp;rsquo;ve run into a situation described by boot2docker issue #581. The issue reports that docker volumes from the OSX disk will not allow writes if the user insider the docker container writing the file isn&amp;rsquo;t root. This has limited effect on casual development, has become an achilles heel for those wanting to use docker as the foundation of a prototype-to-production workflow AND develop on OSX.</description>
+    </item>
+    
+  </channel>
+</rss>

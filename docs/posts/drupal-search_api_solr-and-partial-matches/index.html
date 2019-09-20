@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.58.3" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Drupal, search_api_solr and Partial Matches &middot; Jacob Sanford</title>
+  <meta property="og:title" content="Drupal, search_api_solr and Partial Matches" />
+  <meta name="title" content="Drupal, search_api_solr and Partial Matches" />
+  <meta property="og:description" content="Configuring solr to return partial matches through Drupal&amp;rsquo;s search_api_solr is well documented. In particular, one d.o document is thorough and stands out: Customizing the Solr configuration. It states:
+ First, copy a text type definition to schema_extra_types.xml and change the identifier, as described above. Then, add the following line to the type definition after the first occurrence of &amp;ldquo;solr.SnowballPorterFilterFactory&amp;rdquo; (inside of the element; not after the second occurrence):
+&amp;lt;filter class=&amp;#34;solr." />
+  <meta name="description" content="Configuring solr to return partial matches through Drupal&amp;rsquo;s search_api_solr is well documented. In particular, one d.o document is thorough and stands out: Customizing the Solr configuration. It states:
+ First, copy a text type definition to schema_extra_types.xml and change the identifier, as described above. Then, add the following line to the type definition after the first occurrence of &amp;ldquo;solr.SnowballPorterFilterFactory&amp;rdquo; (inside of the element; not after the second occurrence):
+&amp;lt;filter class=&amp;#34;solr." />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <meta name="geo.placename" content="Fredericton" />
+  <meta name="geo.region" content="CA-NB" />
+  <meta property="og:country_name" content="Canada" />
+  <meta property="og:locality" content="Fredericton" />
+  <meta property="og:region" content="New Brunswick" />
+  <meta property="og:site_name" content="JacobSanford.com" />
+  <meta property="og:url" content="http://jacobsanford.com/posts/drupal-search_api_solr-and-partial-matches/" />
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://jacobsanford.com/">
+        <img class="portrait" src="https://avatars0.githubusercontent.com/u/244894?s=460&v=4" itemprop="image" alt="Jacob Sanford">
+      </a>
+      <a href="http://jacobsanford.com/"><h1>Jacob Sanford</h1></a>
+      <p class="lead">
+        Senior Technical Operations Manager <a href='https://lib.unb.ca' target='_blank'>@UNBLibraries</a>. DevOps, k8s, workflows, and Drupal enthusiast.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://jacobsanford.com/">Home</a> </li>
+        <li><a href="/posts/"> Posts </a></li>
+      </ul>
+    </nav>
+
+    <nav>
+      Post Topics:
+      <ul class="topic-list">
+          
+                  <li><a href="http://jacobsanford.com/tags/docker/">docker</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/drupal/">drupal</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/osx/">osx</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/boot2docker/">boot2docker</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/drupal-8/">drupal 8</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/drupalcon/">drupalcon</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/presentations/">presentations</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/workflow/">workflow</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/cargodock/">cargodock</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/ci/">ci</a></li>
+          
+      </ul>
+
+      <span class='navlabel'>Contact:</span>
+      <ul class="network-icon" aria-hidden="true">
+        <li>
+          <a itemprop="sameAs" href="mailto:jsanford@unb.ca" target="_blank" rel="noopener">
+            <i class="fa fa-envelope big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="//github.com/JacobSanford" target="_blank" rel="noopener">
+            <i class="fa fa-github big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="//www.drupal.org/u/jacobsanford" target="_blank" rel="noopener">
+            <i class="fa fa-drupal big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="https://www.linkedin.com/in/jacob-sanford-5762bb63/" target="_blank" rel="noopener">
+            <i class="fa fa-linkedin big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="https://scholar.google.com/citations?user=aN0xvUYAAAAJ" target="_blank" rel="noopener">
+            <i class="ai ai-google-scholar big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="//twitter.com/JacobSanfo" target="_blank" rel="noopener">
+            <i class="fa fa-twitter big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="#" target="_blank" rel="noopener">
+            <i class="fa icon fa icon-applications big-icon"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2019. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    
+    <span>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">/ <a href="/">Home</a></li>
+        
+          
+              
+                  
+              
+          
+              
+                  
+                      <li class="breadcrumb-item">/ <a href="/posts">Posts</a></li>
+                  
+              
+          
+              
+                  
+                      <li class="breadcrumb-item">/ Drupal, Search_api_solr and Partial Matches</li>
+                  
+              
+          
+              
+                  
+              
+          
+        
+        </ol>
+    </span>
+
+
+
+
+
+<div class="post">
+  <h1>Drupal, search_api_solr and Partial Matches</h1>
+  <span class="post-author">Jacob Sanford</span>
+  <time datetime=2016-11-10T08:27:04-0400 class="post-date">Thu, Nov 10, 2016</time>
+
+  
+
+<p>Configuring solr to return <a href="https://www.google.ca/search?q=search_api_solr+partial+matches">partial matches through Drupal&rsquo;s search_api_solr is well documented</a>. In particular, one <a href="https://www.drupal.org">d.o document</a> is thorough and stands out: <a href="https://www.drupal.org/node/200976">Customizing the Solr configuration</a>. It states:</p>
+
+<blockquote>
+<p>First, copy a text type definition to schema_extra_types.xml and change the identifier, as described above.
+Then, add the following line to the type definition after the first occurrence of &ldquo;solr.SnowballPorterFilterFactory&rdquo; (inside of the <analyzer type="index"> element; not after the second occurrence):</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;filter</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;solr.EdgeNGramFilterFactory&#34;</span> <span style="color:#a6e22e">minGramSize=</span><span style="color:#e6db74">&#34;2&#34;</span> <span style="color:#a6e22e">maxGramSize=</span><span style="color:#e6db74">&#34;25&#34;</span> <span style="color:#f92672">/&gt;</span></code></pre></div>
+
+<p>If you want partial matches inside of words to be found, too, simply remove the &ldquo;Edge&rdquo; part from that line. In this case, you should also remove both occurrences of the solr.WordDelimiterFilterFactory filters: remove everything from the <filter that preceeds that string to the "great than" sign (>) coming after it.</p>
+</blockquote>
+
+<p>Sounds great! Adding the <em>NGramFilterFactory</em> filter after the <em>SnowballPorterFilterFactory</em> seems a bit befuddling at first (both <em>SnowballPorterFilterFactory</em> and <em>NGramFilterFactory</em> tokenize the strings). Doubly creating tokens seems to be a bit redundant, however with small enough ngram sizes I suppose it might be of benefit.</p>
+
+<h2 id="initial-results">Initial Results</h2>
+
+<p>A configuration as above does indeed deliver partial matching functionality in results, but <strong>with relevance scores where partial and exact field matches are ranked equally</strong>. An exact match would only be one of many equally-scored derived tokens. In these cases, the order they appear in search results would depend on the secondary sort.</p>
+
+<p>So yes, the many documents that advise changing the <em>text</em> fieldType filters to add <em>NGramFilterFactory</em> (or creating a new type, and assigning that to the ts_* dynamic field), does solve the partial matching problem.</p>
+
+<p>However, I believe that <strong>users who type <em>exact</em> node titles into search boxes would generally expect to see those first in a result set, followed by those that match <em>somewhat</em>, and then <em>less-and-less</em></strong>.</p>
+
+<h2 id="the-goal">The Goal</h2>
+
+<p>To obtain this, we require solr to return a result set where:</p>
+
+<ul>
+<li>Partial matching is considered across all fields</li>
+<li>EXACT matches on certain fields are scored higher and given more relevancy.</li>
+</ul>
+
+<h2 id="solution">Solution</h2>
+
+<p>For this solution, consider the title field as the one to boost for an exact match.</p>
+
+<h3 id="1-edit-solr-configuration-files">1) Edit Solr Configuration Files</h3>
+
+<p>On your solr server, add a new field type, <code>text_ngram</code> to the schema:</p>
+
+<h4 id="solr-extra-types-xml">solr_extra_types.xml</h4>
+
+<p>In <code>&lt;types&gt;</code>, add a new ngrammed field type for text:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">    <span style="color:#f92672">&lt;fieldType</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;text_ngram&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;solr.TextField&#34;</span> <span style="color:#a6e22e">positionIncrementGap=</span><span style="color:#e6db74">&#34;100&#34;</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#f92672">&lt;analyzer</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;index&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;charFilter</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;solr.MappingCharFilterFactory&#34;</span> <span style="color:#a6e22e">mapping=</span><span style="color:#e6db74">&#34;mapping-ISOLatin1Accent.txt&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;tokenizer</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;solr.WhitespaceTokenizerFactory&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#75715e">&lt;!-- in this example, we will only use synonyms at query time
+</span><span style="color:#75715e">        &lt;filter class=&#34;solr.SynonymFilterFactory&#34; synonyms=&#34;index_synonyms.txt&#34; ignoreCase=&#34;true&#34; expand=&#34;false&#34;/&gt;
+</span><span style="color:#75715e">        --&gt;</span>
+        <span style="color:#75715e">&lt;!-- Case insensitive stop word removal. --&gt;</span>
+        <span style="color:#f92672">&lt;filter</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;solr.StopFilterFactory&#34;</span>
+                <span style="color:#a6e22e">ignoreCase=</span><span style="color:#e6db74">&#34;true&#34;</span>
+                <span style="color:#a6e22e">words=</span><span style="color:#e6db74">&#34;stopwords.txt&#34;</span>
+                <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;filter</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;solr.LengthFilterFactory&#34;</span> <span style="color:#a6e22e">min=</span><span style="color:#e6db74">&#34;2&#34;</span> <span style="color:#a6e22e">max=</span><span style="color:#e6db74">&#34;100&#34;</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;filter</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;solr.LowerCaseFilterFactory&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;filter</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;solr.NGramFilterFactory&#34;</span> <span style="color:#a6e22e">minGramSize=</span><span style="color:#e6db74">&#34;3&#34;</span> <span style="color:#a6e22e">maxGramSize=</span><span style="color:#e6db74">&#34;15&#34;</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;filter</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;solr.RemoveDuplicatesTokenFilterFactory&#34;</span><span style="color:#f92672">/&gt;</span>
+      <span style="color:#f92672">&lt;/analyzer&gt;</span>
+      <span style="color:#f92672">&lt;analyzer</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;query&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;charFilter</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;solr.MappingCharFilterFactory&#34;</span> <span style="color:#a6e22e">mapping=</span><span style="color:#e6db74">&#34;mapping-ISOLatin1Accent.txt&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;tokenizer</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;solr.WhitespaceTokenizerFactory&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;filter</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;solr.SynonymFilterFactory&#34;</span> <span style="color:#a6e22e">synonyms=</span><span style="color:#e6db74">&#34;synonyms.txt&#34;</span> <span style="color:#a6e22e">ignoreCase=</span><span style="color:#e6db74">&#34;true&#34;</span> <span style="color:#a6e22e">expand=</span><span style="color:#e6db74">&#34;true&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;filter</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;solr.StopFilterFactory&#34;</span>
+                <span style="color:#a6e22e">ignoreCase=</span><span style="color:#e6db74">&#34;true&#34;</span>
+                <span style="color:#a6e22e">words=</span><span style="color:#e6db74">&#34;stopwords.txt&#34;</span>
+                <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;filter</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;solr.LengthFilterFactory&#34;</span> <span style="color:#a6e22e">min=</span><span style="color:#e6db74">&#34;2&#34;</span> <span style="color:#a6e22e">max=</span><span style="color:#e6db74">&#34;100&#34;</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;filter</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;solr.LowerCaseFilterFactory&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;filter</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;solr.RemoveDuplicatesTokenFilterFactory&#34;</span><span style="color:#f92672">/&gt;</span>
+      <span style="color:#f92672">&lt;/analyzer&gt;</span>
+      <span style="color:#f92672">&lt;analyzer</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;multiterm&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;charFilter</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;solr.MappingCharFilterFactory&#34;</span> <span style="color:#a6e22e">mapping=</span><span style="color:#e6db74">&#34;mapping-ISOLatin1Accent.txt&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;tokenizer</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;solr.WhitespaceTokenizerFactory&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;filter</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;solr.SynonymFilterFactory&#34;</span> <span style="color:#a6e22e">synonyms=</span><span style="color:#e6db74">&#34;synonyms.txt&#34;</span> <span style="color:#a6e22e">ignoreCase=</span><span style="color:#e6db74">&#34;true&#34;</span> <span style="color:#a6e22e">expand=</span><span style="color:#e6db74">&#34;true&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;filter</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;solr.StopFilterFactory&#34;</span>
+                <span style="color:#a6e22e">ignoreCase=</span><span style="color:#e6db74">&#34;true&#34;</span>
+                <span style="color:#a6e22e">words=</span><span style="color:#e6db74">&#34;stopwords.txt&#34;</span>
+                <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;filter</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;solr.LengthFilterFactory&#34;</span> <span style="color:#a6e22e">min=</span><span style="color:#e6db74">&#34;2&#34;</span> <span style="color:#a6e22e">max=</span><span style="color:#e6db74">&#34;100&#34;</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;filter</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;solr.LowerCaseFilterFactory&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;filter</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;solr.RemoveDuplicatesTokenFilterFactory&#34;</span><span style="color:#f92672">/&gt;</span>
+      <span style="color:#f92672">&lt;/analyzer&gt;</span>
+    <span style="color:#f92672">&lt;/fieldType&gt;</span></code></pre></div>
+
+<h4 id="schema-xml">schema.xml</h4>
+
+<p>Alter the default ts_* fieldtype to be the new text_ngram, tokenizing the values. In <code>&lt;fields&gt;</code>, change:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">    <span style="color:#f92672">&lt;field</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;ts_*&#34;</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">indexed=</span><span style="color:#e6db74">&#34;true&#34;</span>  <span style="color:#a6e22e">stored=</span><span style="color:#e6db74">&#34;true&#34;</span> <span style="color:#a6e22e">multiValued=</span><span style="color:#e6db74">&#34;false&#34;</span> <span style="color:#a6e22e">termVectors=</span><span style="color:#e6db74">&#34;true&#34;</span> <span style="color:#f92672">/&gt;</span></code></pre></div>
+
+<p>to</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">    <span style="color:#f92672">&lt;field</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;ts_*&#34;</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;text_ngram&#34;</span> <span style="color:#a6e22e">indexed=</span><span style="color:#e6db74">&#34;true&#34;</span>  <span style="color:#a6e22e">stored=</span><span style="color:#e6db74">&#34;true&#34;</span> <span style="color:#a6e22e">multiValued=</span><span style="color:#e6db74">&#34;false&#34;</span> <span style="color:#a6e22e">termVectors=</span><span style="color:#e6db74">&#34;true&#34;</span> <span style="color:#f92672">/&gt;</span></code></pre></div>
+
+<p>Then add an exact match element for title and set it as text.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">    <span style="color:#f92672">&lt;field</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;ts_title&#34;</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">indexed=</span><span style="color:#e6db74">&#34;true&#34;</span>  <span style="color:#a6e22e">stored=</span><span style="color:#e6db74">&#34;true&#34;</span> <span style="color:#a6e22e">multiValued=</span><span style="color:#e6db74">&#34;false&#34;</span> <span style="color:#a6e22e">termVectors=</span><span style="color:#e6db74">&#34;true&#34;</span> <span style="color:#f92672">/&gt;</span></code></pre></div>
+
+<h3 id="2-restart-solr">2) Restart Solr</h3>
+
+<p>Restart solr to load the new schema.</p>
+
+<h3 id="3-update-search-api-solr-drupal-configuration">3) Update search_api_solr Drupal configuration</h3>
+
+<p>Navigate to <code>/admin/config/search/search-api/index/*INDEXNAME*/fields</code> in Drupal.</p>
+
+<p>Ensure  the title field exists twice in the field list, each with machine names:
+* <code>title</code> : FULLTEXT with Boost 21.0 (Exact title matches as specified in schema.xml)
+* <code>title_ngram</code> : FULLTEXT with Boost 15.0  (Partial matches on title, uses dynamic ts_*)</p>
+
+<p>Verify that all other fields that should indexed are are listed in the field tab.</p>
+
+<h3 id="4-delete-indexed-documents-and-reindex-in-drupal">4) Delete Indexed documents and reindex in Drupal</h3>
+
+<p>Navigate to <code>admin/config/search/search-api/index/pm_portal</code> in Drupal.</p>
+
+<ul>
+<li>Click &ldquo;Clear all indexed data&rdquo;</li>
+<li>Click &ldquo;Index now&rdquo; beside &lsquo;Index all items&rsquo;</li>
+</ul>
+
+   
+Post Tags:
+<ul class="tag-list" id="tags">
+    
+        
+        
+            <li><a href="http://jacobsanford.com/tags/drupal/">drupal</a></li>
+        
+    
+        
+        
+            <li><a href="http://jacobsanford.com/tags/search_api_solr/">search_api_solr</a></li>
+        
+    
+        
+        
+            <li><a href="http://jacobsanford.com/tags/solr/">solr</a></li>
+        
+    
+</ul>
+
+</div>
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jacobsanford" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-21448090-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

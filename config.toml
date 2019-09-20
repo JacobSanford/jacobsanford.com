@@ -1,0 +1,18 @@
+baseURL = "http://jacobsanford.com/"
+languageCode = "en-us"
+title = "Jacob Sanford"
+theme = "hyde"
+
+googleAnalytics = "UA-21448090-1"
+disqusShortname = "jacobsanford"
+
+[params]
+  description = "Senior Technical Operations Manager <a href='https://www.drupal.org' target='_blank'>@UNBLibraries</a>. DevOps, k8s, workflows, and Drupal enthusiast."
+
+[Menus]
+  main = [
+      {Name = "Posts", URL = "/posts/"},
+  ]
+
+[taxonomies]
+  tag = "tags"

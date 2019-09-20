@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.58.3" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Deploying a docker-machine to a VMWare VSphere Host &middot; Jacob Sanford</title>
+  <meta property="og:title" content="Deploying a docker-machine to a VMWare VSphere Host" />
+  <meta name="title" content="Deploying a docker-machine to a VMWare VSphere Host" />
+  <meta property="og:description" content="Docker-Machine and VSphere By default, docker-machine on OSX leverages Virtualbox to deploy a Boot2Docker VM to serve as an endpoint for the host docker commands. This configuration satisfies a common use case for development, but does suffer from drawbacks relating to &amp;ldquo;the 3 P&amp;rsquo;s&amp;rdquo; : Performance, Persistence and Permission issues (due to VBoxSF). You can dodge some of these by provisioning Boot2Docker VM on a vSphere managed host, instead of your local computer." />
+  <meta name="description" content="Docker-Machine and VSphere By default, docker-machine on OSX leverages Virtualbox to deploy a Boot2Docker VM to serve as an endpoint for the host docker commands. This configuration satisfies a common use case for development, but does suffer from drawbacks relating to &amp;ldquo;the 3 P&amp;rsquo;s&amp;rdquo; : Performance, Persistence and Permission issues (due to VBoxSF). You can dodge some of these by provisioning Boot2Docker VM on a vSphere managed host, instead of your local computer." />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <meta name="geo.placename" content="Fredericton" />
+  <meta name="geo.region" content="CA-NB" />
+  <meta property="og:country_name" content="Canada" />
+  <meta property="og:locality" content="Fredericton" />
+  <meta property="og:region" content="New Brunswick" />
+  <meta property="og:site_name" content="JacobSanford.com" />
+  <meta property="og:url" content="http://jacobsanford.com/posts/deploying-a-docker-machine-to-a-vmware-vsphere-host/" />
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://jacobsanford.com/">
+        <img class="portrait" src="https://avatars0.githubusercontent.com/u/244894?s=460&v=4" itemprop="image" alt="Jacob Sanford">
+      </a>
+      <a href="http://jacobsanford.com/"><h1>Jacob Sanford</h1></a>
+      <p class="lead">
+        Senior Technical Operations Manager <a href='https://lib.unb.ca' target='_blank'>@UNBLibraries</a>. DevOps, k8s, workflows, and Drupal enthusiast.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://jacobsanford.com/">Home</a> </li>
+        <li><a href="/posts/"> Posts </a></li>
+      </ul>
+    </nav>
+
+    <nav>
+      Post Topics:
+      <ul class="topic-list">
+          
+                  <li><a href="http://jacobsanford.com/tags/docker/">docker</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/drupal/">drupal</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/osx/">osx</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/boot2docker/">boot2docker</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/drupal-8/">drupal 8</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/drupalcon/">drupalcon</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/presentations/">presentations</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/workflow/">workflow</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/cargodock/">cargodock</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/ci/">ci</a></li>
+          
+      </ul>
+
+      <span class='navlabel'>Contact:</span>
+      <ul class="network-icon" aria-hidden="true">
+        <li>
+          <a itemprop="sameAs" href="mailto:jsanford@unb.ca" target="_blank" rel="noopener">
+            <i class="fa fa-envelope big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="//github.com/JacobSanford" target="_blank" rel="noopener">
+            <i class="fa fa-github big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="//www.drupal.org/u/jacobsanford" target="_blank" rel="noopener">
+            <i class="fa fa-drupal big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="https://www.linkedin.com/in/jacob-sanford-5762bb63/" target="_blank" rel="noopener">
+            <i class="fa fa-linkedin big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="https://scholar.google.com/citations?user=aN0xvUYAAAAJ" target="_blank" rel="noopener">
+            <i class="ai ai-google-scholar big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="//twitter.com/JacobSanfo" target="_blank" rel="noopener">
+            <i class="fa fa-twitter big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="#" target="_blank" rel="noopener">
+            <i class="fa icon fa icon-applications big-icon"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2019. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    
+    <span>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">/ <a href="/">Home</a></li>
+        
+          
+              
+                  
+              
+          
+              
+                  
+                      <li class="breadcrumb-item">/ <a href="/posts">Posts</a></li>
+                  
+              
+          
+              
+                  
+                      <li class="breadcrumb-item">/ Deploying a Docker-Machine to a VMWare VSphere Host</li>
+                  
+              
+          
+              
+                  
+              
+          
+        
+        </ol>
+    </span>
+
+
+
+
+<em><b>You Should Know</b>: This is a legacy article that references docker-machine, which is no longer the recommended method for OSX/docker development. It is recommended you use Docker for Mac.</em>
+
+<div class="post">
+  <h1>Deploying a docker-machine to a VMWare VSphere Host</h1>
+  <span class="post-author">Jacob Sanford</span>
+  <time datetime=2015-10-12T12:32:51-0400 class="post-date">Mon, Oct 12, 2015</time>
+
+  
+
+<h2 id="docker-machine-and-vsphere">Docker-Machine and VSphere</h2>
+
+<p>By default, <code>docker-machine</code> on OSX leverages Virtualbox to deploy a Boot2Docker VM to serve as an endpoint for the host docker commands. This configuration satisfies a common use case for development, but does suffer from drawbacks relating to &ldquo;the 3 P&rsquo;s&rdquo; : Performance, Persistence and Permission issues (<a href="https://github.com/boot2docker/boot2docker/issues/581">due to VBoxSF</a>). You can dodge some of these by provisioning Boot2Docker VM on a vSphere managed host, instead of your local computer.</p>
+
+<p>If you have access to a VMWare VSphere host, the steps are as follows:</p>
+
+<h3 id="1-determine-your-vsphere-user-credentials">1. Determine your VSphere user credentials</h3>
+
+<p>This post assumes you have credentials for a remote user on VSphere, which will be referred to as <code>vsphere-user</code>. It is recommended that you not use the root account. For additional assistance, see <a href="https://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=2082641">VMWare KB #2082641</a>.</p>
+
+<h3 id="2-install-govc-osx">2. Install GovC (OSX)</h3>
+
+<p><a href="https://github.com/vmware/govmomi/tree/master/govc">govc</a> is a vSphere CLI utility built on top of govmomi, a <a href="https://github.com/vmware/govmomi">go library for the VMware vSphere API</a>. It is necessary to automatically provision a virtual machine on the VMWare host using <code>docker-machine</code>. To install <code>govc</code></p>
+
+<h4 id="a-install-go">a. Install go</h4>
+
+<p>The package <code>govc</code> is built on <a href="https://golang.org/">go</a>, and requires it to run. Download the latest <a href="http://golang.org/dl/">go package installer</a>. Run the installer, then verify  <code>go</code> is working correctly:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; go version
+
+go version go1.4.2 darwin/amd64</code></pre></div>
+
+<h4 id="b-set-up-the-go-build-environment">b. Set up the go build environment</h4>
+
+<p>To build <code>govc</code>, we will need to set up the <code>go</code> build environment. To do so:</p>
+
+<p>Using <code>bash shell</code>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; export GOPATH<span style="color:#f92672">=</span>$HOME/src/go
+&gt; mkdir -p $GOPATH
+&gt; export PATH<span style="color:#f92672">=</span>$PATH:$GOPATH/bin</code></pre></div></p>
+
+<p>Using <code>fish shell</code>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; set -Ux GOPATH $HOME/src/go
+&gt; mkdir -p $GOPATH
+&gt; set --universal fish_user_paths $fish_user_paths $GOPATH/bin</code></pre></div></p>
+
+<h4 id="c-install-govc">c. Install govc</h4>
+
+<p>Now that <code>go</code> is installed, we can install <code>govc</code>.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; go get github.com/vmware/govmomi/govc</code></pre></div>
+
+<h3 id="3-export-environment-variables-and-test-vsphere-host-connection">3. Export Environment Variables and Test vSphere Host Connection</h3>
+
+<p>The package <code>govc</code> needs environment variables set to communicate with the vSphere host. To set them:</p>
+
+<p>Using <code>bash shell</code>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; export GOVC_URL<span style="color:#f92672">=</span>https://vsphere-user:*PASSWORD*@192.168.0.10/sdk
+&gt; export GOVC_INSECURE<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span></code></pre></div></p>
+
+<p>Using <code>fish shell</code>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; set -Ux GOVC_URL https://vsphere-user:*PASSWORD*@192.168.0.10/sdk
+&gt; set -Ux GOVC_INSECURE <span style="color:#ae81ff">1</span></code></pre></div></p>
+
+<p>Where <code>192.168.0.10</code> is the IP address of your vSphere host. You may then test <code>govc</code>:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; govc about
+
+Name:         VMware ESXi
+Vendor:       VMware, Inc.
+Version:      <span style="color:#ae81ff">5</span>.5.0
+Build:        <span style="color:#ae81ff">2718055</span>
+OS type:      vmnix-x86
+API type:     HostAgent
+API version:  <span style="color:#ae81ff">5</span>.5
+Product ID:   embeddedEsx
+UUID:</code></pre></div>
+
+<h3 id="4-deploy-a-new-vm-with-docker-machine">4. Deploy a New VM with docker-machine</h3>
+
+<p>We are now able to provision a new docker-machine instance on the VSphere host. To do so:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; docker-machine create -d vmwarevsphere <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --vmwarevsphere-vcenter<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;192.168.0.10&#34;</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --vmwarevsphere-username<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;docker&#34;</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --vmwarevsphere-password<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;*PASSWORD*&#34;</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --vmwarevsphere-datacenter<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ha-datacenter&#34;</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --vmwarevsphere-compute-ip<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;192.168.0.10&#34;</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --vmwarevsphere-datastore<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;datastore1&#34;</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --vmwarevsphere-network<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;NET.Building01&#34;</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --vmwarevsphere-cpu-count<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --vmwarevsphere-memory-size<span style="color:#f92672">=</span><span style="color:#ae81ff">4096</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  docker-vsphere-host
+
+Running pre-create checks...
+Creating machine...
+<span style="color:#f92672">(</span>docker-vsphere-host<span style="color:#f92672">)</span> Generating SSH Keypair...
+<span style="color:#f92672">(</span>docker-vsphere-host<span style="color:#f92672">)</span> Uploading Boot2docker ISO ...
+<span style="color:#f92672">(</span>docker-vsphere-host<span style="color:#f92672">)</span> Creating directory docker-vsphere-host on datastore datastore1 of vCenter <span style="color:#ae81ff">192</span>.168.0.10...
+<span style="color:#f92672">(</span>docker-vsphere-host<span style="color:#f92672">)</span> Uploading /Users/jsanford/.docker/machine/boot2docker.iso to docker-vsphere-host on datastore datastore1 of vCenter <span style="color:#ae81ff">192</span>.168.0.10...
+<span style="color:#f92672">(</span>docker-vsphere-host<span style="color:#f92672">)</span> Creating virtual machine docker-vsphere-host of vCenter <span style="color:#ae81ff">192</span>.168.0.10...
+<span style="color:#f92672">(</span>docker-vsphere-host<span style="color:#f92672">)</span> Configuring the virtual machine docker-vsphere-host...
+<span style="color:#f92672">(</span>docker-vsphere-host<span style="color:#f92672">)</span> Powering on virtual machine docker-vsphere-host of vCenter <span style="color:#ae81ff">192</span>.168.0.10...
+Waiting <span style="color:#66d9ef">for</span> machine to be running, this may take a few minutes...
+Machine is running, waiting <span style="color:#66d9ef">for</span> SSH to be available...
+Detecting operating system of created instance...
+Detecting the provisioner...
+Provisioning with boot2docker...
+Copying certs to the local machine directory...
+Copying certs to the remote machine...
+Setting Docker configuration on the remote daemon...
+Checking connection to Docker...
+Docker is up and running!
+To see how to connect Docker to this machine, run: docker-machine env docker-vsphere-host</code></pre></div>
+
+<h3 id="5-run-docker-commands-on-the-new-vsphere-instance">5. Run docker commands on the new VSphere instance.</h3>
+
+<p>To run commands on the newly deployed instance, we must first define environment variables so any docker commands are routed to the newly-created VSphere VM endpoint. <code>docker-machine</code> can tell us how to do so:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; docker-machine env docker-vsphere-host
+
+set -gx DOCKER_TLS_VERIFY <span style="color:#e6db74">&#34;1&#34;</span>;
+set -gx DOCKER_HOST <span style="color:#e6db74">&#34;tcp://192.168.0.101:2376&#34;</span>;
+set -gx DOCKER_CERT_PATH <span style="color:#e6db74">&#34;/Users/jsanford/.docker/machine/machines/docker-vsphere-host&#34;</span>;
+set -gx DOCKER_MACHINE_NAME <span style="color:#e6db74">&#34;docker-vsphere-host&#34;</span>;
+<span style="color:#75715e"># Run this command to configure your shell:</span>
+<span style="color:#75715e"># eval (docker-machine env docker-vsphere-host)</span></code></pre></div></p>
+
+<p>Running that command:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; eval <span style="color:#f92672">(</span>docker-machine env docker-vsphere-host<span style="color:#f92672">)</span>
+&gt; docker ps
+
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES</code></pre></div></p>
+
+<p>All docker commands will now run on the VSphere host.</p>
+
+   
+Post Tags:
+<ul class="tag-list" id="tags">
+    
+        
+        
+            <li><a href="http://jacobsanford.com/tags/docker/">docker</a></li>
+        
+    
+        
+        
+            <li><a href="http://jacobsanford.com/tags/docker-machine/">docker-machine</a></li>
+        
+    
+        
+        
+            <li><a href="http://jacobsanford.com/tags/osx/">osx</a></li>
+        
+    
+        
+        
+            <li><a href="http://jacobsanford.com/tags/vmware/">vmware</a></li>
+        
+    
+        
+        
+            <li><a href="http://jacobsanford.com/tags/vsphere/">vsphere</a></li>
+        
+    
+</ul>
+
+</div>
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jacobsanford" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-21448090-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

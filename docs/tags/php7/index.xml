@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>php7 on Jacob Sanford</title>
+    <link>http://jacobsanford.com/tags/php7/</link>
+    <description>Recent content in php7 on Jacob Sanford</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 02 Aug 2017 14:18:00 -0400</lastBuildDate>
+    
+	<atom:link href="http://jacobsanford.com/tags/php7/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Install PHP7 on OSX</title>
+      <link>http://jacobsanford.com/posts/install-php7-osx/</link>
+      <pubDate>Wed, 02 Aug 2017 14:18:00 -0400</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/install-php7-osx/</guid>
+      <description>Ensure you have OSX Sierra EOM
+Install PHP7 curl -s https://php-osx.liip.ch/install.sh | bash -s 7.1  Symlink Minor version into php7 dir sudo ln -s /usr/local/php5-7.1.4-20170506-100436 /usr/local/php7  Add PHP7 To Your Path Fish Shell set --universal fish_user_paths $fish_user_paths /usr/local/php7/bin  Also, you should probably add the path for Bash Shell (below).
+Bash Shell Add /usr/local/php7/bin to /etc/paths.
+Set the proper timezone Edit
+/usr/local/php5/php.d/99-liip-developer.ini  Full Instructions Here</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.58.3" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>A Solution for boot2docker issue #581? &middot; Jacob Sanford</title>
+  <meta property="og:title" content="A Solution for boot2docker issue #581?" />
+  <meta name="title" content="A Solution for boot2docker issue #581?" />
+  <meta property="og:description" content="Already discussed to death, boot2docker issue #581 (18 months ago) reported that docker volumes from the OSX disk will not allow writes if the user insider the docker container writing the file isn&amp;rsquo;t root, even with proper ownership set. We&amp;rsquo;ve looked at this before.
+There are several work-arounds proposed, I thought we could investigate the most promising one. The first step, however is to:
+Reproduce the issue On OSX, using the latest version of Docker Toolbox, provision the affected environment:" />
+  <meta name="description" content="Already discussed to death, boot2docker issue #581 (18 months ago) reported that docker volumes from the OSX disk will not allow writes if the user insider the docker container writing the file isn&amp;rsquo;t root, even with proper ownership set. We&amp;rsquo;ve looked at this before.
+There are several work-arounds proposed, I thought we could investigate the most promising one. The first step, however is to:
+Reproduce the issue On OSX, using the latest version of Docker Toolbox, provision the affected environment:" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <meta name="geo.placename" content="Fredericton" />
+  <meta name="geo.region" content="CA-NB" />
+  <meta property="og:country_name" content="Canada" />
+  <meta property="og:locality" content="Fredericton" />
+  <meta property="og:region" content="New Brunswick" />
+  <meta property="og:site_name" content="JacobSanford.com" />
+  <meta property="og:url" content="http://jacobsanford.com/posts/solution-for-boot2docker-issue-581/" />
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://jacobsanford.com/">
+        <img class="portrait" src="https://avatars0.githubusercontent.com/u/244894?s=460&v=4" itemprop="image" alt="Jacob Sanford">
+      </a>
+      <a href="http://jacobsanford.com/"><h1>Jacob Sanford</h1></a>
+      <p class="lead">
+        Senior Technical Operations Manager <a href='https://lib.unb.ca' target='_blank'>@UNBLibraries</a>. DevOps, k8s, workflows, and Drupal enthusiast.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://jacobsanford.com/">Home</a> </li>
+        <li><a href="/posts/"> Posts </a></li>
+      </ul>
+    </nav>
+
+    <nav>
+      Post Topics:
+      <ul class="topic-list">
+          
+                  <li><a href="http://jacobsanford.com/tags/docker/">docker</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/drupal/">drupal</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/osx/">osx</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/boot2docker/">boot2docker</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/drupal-8/">drupal 8</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/drupalcon/">drupalcon</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/presentations/">presentations</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/workflow/">workflow</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/cargodock/">cargodock</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/ci/">ci</a></li>
+          
+      </ul>
+
+      <span class='navlabel'>Contact:</span>
+      <ul class="network-icon" aria-hidden="true">
+        <li>
+          <a itemprop="sameAs" href="mailto:jsanford@unb.ca" target="_blank" rel="noopener">
+            <i class="fa fa-envelope big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="//github.com/JacobSanford" target="_blank" rel="noopener">
+            <i class="fa fa-github big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="//www.drupal.org/u/jacobsanford" target="_blank" rel="noopener">
+            <i class="fa fa-drupal big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="https://www.linkedin.com/in/jacob-sanford-5762bb63/" target="_blank" rel="noopener">
+            <i class="fa fa-linkedin big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="https://scholar.google.com/citations?user=aN0xvUYAAAAJ" target="_blank" rel="noopener">
+            <i class="ai ai-google-scholar big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="//twitter.com/JacobSanfo" target="_blank" rel="noopener">
+            <i class="fa fa-twitter big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="#" target="_blank" rel="noopener">
+            <i class="fa icon fa icon-applications big-icon"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2019. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    
+    <span>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">/ <a href="/">Home</a></li>
+        
+          
+              
+                  
+              
+          
+              
+                  
+                      <li class="breadcrumb-item">/ <a href="/posts">Posts</a></li>
+                  
+              
+          
+              
+                  
+                      <li class="breadcrumb-item">/ A Solution for Boot2docker Issue #581?</li>
+                  
+              
+          
+              
+                  
+              
+          
+        
+        </ol>
+    </span>
+
+
+
+
+<em><b>You Should Know</b>: This is a legacy article that references docker-machine, which is no longer the recommended method for OSX/docker development. It is recommended you use Docker for Mac.</em>
+
+<div class="post">
+  <h1>A Solution for boot2docker issue #581?</h1>
+  <span class="post-author">Jacob Sanford</span>
+  <time datetime=2016-02-18T08:28:35-0400 class="post-date">Thu, Feb 18, 2016</time>
+
+  
+
+<p>Already discussed to death, <a href="https://github.com/boot2docker/boot2docker/issues/581">boot2docker issue #581</a> (18 months ago) reported that <em>docker volumes</em> from the OSX disk will not allow writes if the user insider the docker container writing the file isn&rsquo;t root, even with proper ownership set. We&rsquo;ve looked at this before.</p>
+
+<p>There are several work-arounds proposed, I thought we could investigate the most promising one. The first step, however is to:</p>
+
+<h2 id="reproduce-the-issue">Reproduce the issue</h2>
+
+<p>On OSX, using the latest version of <a href="https://github.com/docker/toolbox">Docker Toolbox</a>, provision the affected environment:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; docker-machine create --driver virtualbox docker-machine-test-581
+Running pre-create checks...
+Creating machine...
+<span style="color:#f92672">(</span>docker-machine-test-581<span style="color:#f92672">)</span> Creating VirtualBox VM...
+<span style="color:#f92672">(</span>docker-machine-test-581<span style="color:#f92672">)</span> Creating SSH key...
+<span style="color:#f92672">(</span>docker-machine-test-581<span style="color:#f92672">)</span> Starting VM...
+Waiting <span style="color:#66d9ef">for</span> machine to be running, this may take a few minutes...
+Machine is running, waiting <span style="color:#66d9ef">for</span> SSH to be available...
+Detecting operating system of created instance...
+Detecting the provisioner...
+Provisioning with boot2docker...
+Copying certs to the local machine directory...
+Copying certs to the remote machine...
+Setting Docker configuration on the remote daemon...
+Checking connection to Docker...
+Docker is up and running!
+To see how to connect Docker to this machine, run: docker-machine env docker-machine-test-581
+
+&gt; eval <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>docker-machine env docker-machine-test-581<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span></code></pre></div>
+
+<p>A simple bash script helps us reproduce the behavior : Mount a file in a docker volume with proper permissions assigned and attempt to write to it within the container as non-root.</p>
+
+<script type="application/javascript" src="https://gist.github.com/JacobSanford/67ef08c785399ad6807a.js"></script>
+
+
+<p>Some of the paths may differ, depending on your OSX short account name. Running the script:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; curl -O https://gist.githubusercontent.com/JacobSanford/67ef08c785399ad6807a/raw/152e10d25c8b43254dde0d6217026e28fffbf410/test_581.sh <span style="color:#f92672">&amp;&amp;</span> chmod +x test_581.sh
+&gt; ./test_581.sh
+mv: can<span style="color:#e6db74">&#39;t rename &#39;</span>/data-test/test.txt<span style="color:#960050;background-color:#1e0010">&#39;</span>: Permission denied</code></pre></div>
+
+<p>we see that user <code>postgres</code> (<em>id=70 on alpine:3.1</em>) was denied write access to a file they own on the &lsquo;host&rsquo; system mounted into the container through a docker volume.</p>
+
+<p>Why? Recall that the idea of a local path in a volume statement is misleading, as the docker host is not the OSX machine, rather the VM provided by docker-machine. On OSX, docker-machine driven by a Virtualbox VM automatically creates a VBOXSF mount from the OSX User directory (/User/) into the VM (/User/) filesystem, scrambling the permissions.</p>
+
+<h3 id="control">Control?</h3>
+
+<p>Is the above test valid? As a control, we may run docker directly on a linux host:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; curl -O https://gist.githubusercontent.com/JacobSanford/67ef08c785399ad6807a/raw/152e10d25c8b43254dde0d6217026e28fffbf410/test_581.sh <span style="color:#f92672">&amp;&amp;</span> chmod +x test_581.sh
+&gt; sed -i <span style="color:#e6db74">&#39;s|/Users/jsanford/|/home/jsanford/|g&#39;</span> test_581.sh
+&gt; ./test_581.sh
+&gt; ls data
+  test2.txt</code></pre></div>
+
+<h2 id="solution-convert-vboxsf-to-nfs">Solution : Convert VBOXSF to NFS?</h2>
+
+<p><a href="https://github.com/adlogix/docker-machine-nfs">docker-machine-nfs</a> is a helper that converts the <code>/User</code> share from VBOXSF to NFS after provisioning. Set-up is simple:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; curl -s https://raw.githubusercontent.com/adlogix/docker-machine-nfs/master/docker-machine-nfs.sh |
+  sudo tee /usr/local/bin/docker-machine-nfs &gt; /dev/null <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  sudo chmod +x /usr/local/bin/docker-machine-nfs
+&gt; docker-machine-nfs docker-machine-test-581
+    <span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> Configuration:
+
+        - Machine Name: docker-machine-test-581
+        - Shared Folder: /Users
+        - Mount Options: noacl,async
+        - Force: false
+
+    <span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> machine presence ...             OK
+    <span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> machine running ...             OK
+    <span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> Lookup mandatory properties ... OK
+
+        - Machine IP: <span style="color:#ae81ff">192</span>.168.99.101
+        - Network ID: vboxnet1
+        - NFSHost IP: <span style="color:#ae81ff">192</span>.168.99.1
+
+    <span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> Configure NFS ...
+
+     !!! Sudo will be necessary <span style="color:#66d9ef">for</span> editing /etc/exports !!!
+                            OK
+    <span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> Configure Docker Machine ...         OK
+    <span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> Restart Docker Machine ...         OK
+    <span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> Verify NFS mount ...             OK
+
+    --------------------------------------------
+
+     The docker-machine <span style="color:#e6db74">&#39;docker-machine-test-581&#39;</span>
+     is now mounted with NFS!
+
+     ENJOY high speed mounts :D
+
+    --------------------------------------------</code></pre></div>
+
+<p>And running our test reveals:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; ./test_581.sh
+mv: can<span style="color:#e6db74">&#39;t rename &#39;</span>/data-test/test.txt<span style="color:#960050;background-color:#1e0010">&#39;</span>: Permission denied</code></pre></div>
+
+<p>This didn&rsquo;t change anything. Why? A NFS server defaults to mapping all UIDs from the client (boot2docker VM) into the local account &lsquo;-2&rsquo; (nobody) for security concerns. We trust the VM, so We overcome this with <code>-maproot=0</code>, instucting the OSX nfs server to map VM root requests to our local root account. This will allow writes on the VM through the docker daemon.</p>
+
+<p>To verify, we start over and re-run <code>docker-machine-nfs</code> with this option:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; docker-machine rm docker-machine-test-581
+&gt; docker-machine create --driver virtualbox docker-machine-test-581
+&gt; docker-machine-nfs docker-machine-test-581 --nfs-config<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;-maproot=0&#34;</span>
+&gt; ./test_581.sh
+&gt; ls data
+test2.txt</code></pre></div>
+
+<p>Success? Or wizardry that creates an all-you-can-eat buffet WRT file permissions? To check:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; sed -i <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#e6db74">&#39;s|70:70|71:71|g&#39;</span> test_581.sh
+&gt; ./test_581.sh
+  mv: can<span style="color:#e6db74">&#39;t rename &#39;</span>/data-test/test.txt<span style="color:#960050;background-color:#1e0010">&#39;</span>: Permission denied</code></pre></div>
+
+<p>Success.</p>
+
+   
+Post Tags:
+<ul class="tag-list" id="tags">
+    
+        
+        
+            <li><a href="http://jacobsanford.com/tags/docker/">docker</a></li>
+        
+    
+        
+        
+            <li><a href="http://jacobsanford.com/tags/boot2docker/">boot2docker</a></li>
+        
+    
+        
+        
+            <li><a href="http://jacobsanford.com/tags/osx/">osx</a></li>
+        
+    
+</ul>
+
+</div>
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jacobsanford" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-21448090-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

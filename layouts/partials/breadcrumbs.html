@@ -1,0 +1,23 @@
+{{ if not .IsHome }}
+    <span>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">/ <a href="/">Home</a></li>
+        {{ if in .URL "tags" }}
+            <li class="breadcrumb-item">/ {{ title ( humanize ( .Params.title ) ) }}</li>
+        {{ else }}
+          {{ range (split .URL "/") }}
+              {{ if eq . "posts" }}
+                  {{ if gt (len . ) 0 }}
+                      <li class="breadcrumb-item">/ <a href="/{{ . }}">{{ title ( humanize ( . ) ) }}</a></li>
+                  {{ end }}
+              {{ else if eq . "tags" }}
+              {{ else }}
+                  {{ if gt (len . ) 0 }}
+                      <li class="breadcrumb-item">/ {{ title ( $.Title ) }}</li>
+                  {{ end }}
+              {{ end }}
+          {{ end }}
+        {{ end }}
+        </ol>
+    </span>
+{{ end }}

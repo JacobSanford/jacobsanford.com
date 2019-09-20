@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>newrelic on Jacob Sanford</title>
+    <link>http://jacobsanford.com/tags/newrelic/</link>
+    <description>Recent content in newrelic on Jacob Sanford</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 01 Mar 2017 12:01:59 -0300</lastBuildDate>
+    
+	<atom:link href="http://jacobsanford.com/tags/newrelic/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Newrelic PHP Agent MUSL: Latest Download URI</title>
+      <link>http://jacobsanford.com/posts/newrelic-php-agent-musl-latest-download-uri/</link>
+      <pubDate>Wed, 01 Mar 2017 12:01:59 -0300</pubDate>
+      
+      <guid>http://jacobsanford.com/posts/newrelic-php-agent-musl-latest-download-uri/</guid>
+      <description>Newrelic does not provide a &amp;lsquo;latest&amp;rsquo; download URI for the PHP agent. This proves problematic when attempting to inject the agent into PHP container when building in Docker, as version changes will break builds. I have filed a bug to this end:
+https://discuss.newrelic.com/t/stable-latest-php-agent-download-uri/48082
+For now we have implemented a script to accomplish this task.
+#!/usr/bin/env sh set -e # Get latest download URI. NEWRELIC_DOWNLOAD_FILE=$(curl -s http://download.newrelic.com/php_agent/release/ | sed -rn &amp;#39;s/.*(newrelic-php5-[0-9.]+-linux-musl\.tar\.gz).*/\1/p&amp;#39;) NEWRELIC_DOWNLOAD_URI=&amp;#34;http://download.</description>
+    </item>
+    
+  </channel>
+</rss>

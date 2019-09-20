@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.58.3" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Docker Toolbox, OSX, and VirtualBox VBoxSF Permissions &middot; Jacob Sanford</title>
+  <meta property="og:title" content="Docker Toolbox, OSX, and VirtualBox VBoxSF Permissions" />
+  <meta name="title" content="Docker Toolbox, OSX, and VirtualBox VBoxSF Permissions" />
+  <meta property="og:description" content="If you are developing in docker on OSX, chances are you&amp;rsquo;ve run into a situation described by boot2docker issue #581. The issue reports that docker volumes from the OSX disk will not allow writes if the user insider the docker container writing the file isn&amp;rsquo;t root. This has limited effect on casual development, has become an achilles heel for those wanting to use docker as the foundation of a prototype-to-production workflow AND develop on OSX." />
+  <meta name="description" content="If you are developing in docker on OSX, chances are you&amp;rsquo;ve run into a situation described by boot2docker issue #581. The issue reports that docker volumes from the OSX disk will not allow writes if the user insider the docker container writing the file isn&amp;rsquo;t root. This has limited effect on casual development, has become an achilles heel for those wanting to use docker as the foundation of a prototype-to-production workflow AND develop on OSX." />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <meta name="geo.placename" content="Fredericton" />
+  <meta name="geo.region" content="CA-NB" />
+  <meta property="og:country_name" content="Canada" />
+  <meta property="og:locality" content="Fredericton" />
+  <meta property="og:region" content="New Brunswick" />
+  <meta property="og:site_name" content="JacobSanford.com" />
+  <meta property="og:url" content="http://jacobsanford.com/posts/docker-toolbox-osx-and-virtualbox-vboxsf-permissions/" />
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://jacobsanford.com/">
+        <img class="portrait" src="https://avatars0.githubusercontent.com/u/244894?s=460&v=4" itemprop="image" alt="Jacob Sanford">
+      </a>
+      <a href="http://jacobsanford.com/"><h1>Jacob Sanford</h1></a>
+      <p class="lead">
+        Senior Technical Operations Manager <a href='https://lib.unb.ca' target='_blank'>@UNBLibraries</a>. DevOps, k8s, workflows, and Drupal enthusiast.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://jacobsanford.com/">Home</a> </li>
+        <li><a href="/posts/"> Posts </a></li>
+      </ul>
+    </nav>
+
+    <nav>
+      Post Topics:
+      <ul class="topic-list">
+          
+                  <li><a href="http://jacobsanford.com/tags/docker/">docker</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/drupal/">drupal</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/osx/">osx</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/boot2docker/">boot2docker</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/drupal-8/">drupal 8</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/drupalcon/">drupalcon</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/presentations/">presentations</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/workflow/">workflow</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/cargodock/">cargodock</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/ci/">ci</a></li>
+          
+      </ul>
+
+      <span class='navlabel'>Contact:</span>
+      <ul class="network-icon" aria-hidden="true">
+        <li>
+          <a itemprop="sameAs" href="mailto:jsanford@unb.ca" target="_blank" rel="noopener">
+            <i class="fa fa-envelope big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="//github.com/JacobSanford" target="_blank" rel="noopener">
+            <i class="fa fa-github big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="//www.drupal.org/u/jacobsanford" target="_blank" rel="noopener">
+            <i class="fa fa-drupal big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="https://www.linkedin.com/in/jacob-sanford-5762bb63/" target="_blank" rel="noopener">
+            <i class="fa fa-linkedin big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="https://scholar.google.com/citations?user=aN0xvUYAAAAJ" target="_blank" rel="noopener">
+            <i class="ai ai-google-scholar big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="//twitter.com/JacobSanfo" target="_blank" rel="noopener">
+            <i class="fa fa-twitter big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="#" target="_blank" rel="noopener">
+            <i class="fa icon fa icon-applications big-icon"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2019. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    
+    <span>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">/ <a href="/">Home</a></li>
+        
+          
+              
+                  
+              
+          
+              
+                  
+                      <li class="breadcrumb-item">/ <a href="/posts">Posts</a></li>
+                  
+              
+          
+              
+                  
+                      <li class="breadcrumb-item">/ Docker Toolbox, OSX, and VirtualBox VBoxSF Permissions</li>
+                  
+              
+          
+              
+                  
+              
+          
+        
+        </ol>
+    </span>
+
+
+
+
+<em><b>You Should Know</b>: This is a legacy article that references docker toolbox and Virtualbox, which is no longer the recommended method for OSX/docker development. It is recommended you use Docker for Mac.</em>
+
+<div class="post">
+  <h1>Docker Toolbox, OSX, and VirtualBox VBoxSF Permissions</h1>
+  <span class="post-author">Jacob Sanford</span>
+  <time datetime=2015-07-17T08:39:25-0400 class="post-date">Fri, Jul 17, 2015</time>
+
+  
+
+<p>If you are developing in docker on OSX, chances are you&rsquo;ve run into a situation described by <a href="https://github.com/boot2docker/boot2docker/issues/581">boot2docker issue #581</a>. The issue reports that <em>docker volumes</em> from the OSX disk will not allow writes if the user insider the docker container writing the file isn&rsquo;t root. This has limited effect on casual development, has become an achilles heel for those wanting to use docker as the foundation of a prototype-to-production workflow AND develop on OSX.</p>
+
+<p>Why does this affect OSX specifically, and not Linux? To understand, we can quickly examine what docker volumes are, why we use <em>docker toolbox</em>, and how volumes are managed through <em>docker-machine</em> and <em>boot2docker</em>.</p>
+
+<h2 id="docker-volumes">Docker Volumes</h2>
+
+<p>Since most applications rely on a data source of some type, docker containers would have limited use and portability if one could not expose an external filesystem to the container, or write data from the container into an external filesystem. Both are possible via <em>volumes</em>, typically defined by <a href="https://docs.docker.com/reference/builder/"><em>VOLUME</em> declarations</a> inside the <em>Dockerfile</em>.</p>
+
+<p>From <a href="http://container-solutions.com/understanding-volumes-docker/">Understanding Volumes in Docker</a></p>
+
+<blockquote>
+<p>In order to understand what a Docker volume is, we first need to be clear about how the filesystem normally works in Docker. Docker images are stored as series of read-only layers. When we start a container, Docker takes the read-only image and adds a read-write layer on top. If the running container modifies an existing file, the file is copied out of the underlying read-only layer and into the top-most read-write layer where the changes are applied. The version in the read-write layer hides the underlying file, but does not destroy it — it still exists in the underlying image. When a Docker container is deleted, relaunching the image will start a fresh container without any of the changes made in the previously running container — those changes are lost. Docker calls this combination of read-only layers with a read-write layer on top a Union File System.</p>
+
+<p>In order to be able to save (persist) data and share data between containers, Docker came up with the concept of volumes. Quite simply, volumes are directories (or files) that are outside of the default Union File System and exist as normal directories and files on the host filesystem.</p>
+</blockquote>
+
+<p>Again; host files stored outside docker and exposed to the container via a <em>VOLUME</em> declaration are not considered as part of the container&rsquo;s filesystem, and the <code>docker rm</code> command does not remove them. They are defined at runtime (container creation) by a <a href="https://docs.docker.com/reference/builder/">VOLUME statement</a>. The format is:</p>
+
+<pre><code>docker run -v /local/path:/container/path image/name
+</code></pre>
+
+<p>which mounts a <code>/local/path</code> to the <code>/container/path</code> inside the container (and replacing any data that already exists there). This works swimmingly in linux.</p>
+
+<h2 id="osx-complications-arise">OSX - Complications Arise</h2>
+
+<p>When leveraging <em>docker-machine</em> with a VM to run docker commands, however, the idea of a <em>local path</em> in a volume statement is misleading, as the docker host is not the user&rsquo;s machine, rather the VM provided by <em>docker-machine</em>. Following; since the local path in a volume statement defines a path within the <em>docker-machine</em> VM, it is problematic to expose files from the user&rsquo;s machine through two layers of abstraction into the docker container.</p>
+
+<p>This complication is (at first glance) solved by the fact that the OSX <em>docker-machine</em> Virtualbox VM automatically creates a VBOXSF mount from the OSX User directory (/User/) into the VM (/User/) filesystem. Volume statements using absolute paths:</p>
+
+<pre><code>-v /Users/dave/data/books:/var/lib/books
+</code></pre>
+
+<p>will then behave as intended, since /Users/ is shared between the host and the docker-running VM. In most cases, however, <strong>this &lsquo;convenience&rsquo; cripples the performance of the container, and often doesn&rsquo;t work at all</strong>. The <a href="http://mitchellh.com/comparing-filesystem-performance-in-virtual-machines">VBOXSF sharing speed is poor and decreases exponentially with the number of files on disk</a>, and (most importantly) file permissions are inconsistent. This inconsistency means docker volumes from the OSX disk will not allow writes if the user insider the docker container writing the file isn&rsquo;t root.</p>
+
+<h2 id="this-root-thing-why-is-it-a-problem">This root thing, why is it a problem?</h2>
+
+<p>So, what&rsquo;s the concern? Why not just run services as root? Most services in the &lsquo;bare metal&rsquo; world are generally not run as root (apache/www-data, etc.). This is for security reasons, but do the concerns driving this apply to a single service in an isolated container?</p>
+
+<p><a href="https://groups.google.com/forum/#!msg/docker-user/e9RkC4y-21E/JOZF8H-PfYsJ">A post by Jérôme Petazzoni</a> discusses this:</p>
+
+<blockquote>
+<p>The best practice is to combine:
+  1. Running your process as non-privileged user within the containers (docker lets you do that easily)
+  2. stripping the container from all the potentially dangerous system capabilities (docker does that automatically)
+  3. running an hardened Linux, with e.g. a grsec-enabled kernel, or with your distro&rsquo;s security module (SELinux, AppArmor&hellip;)</p>
+
+<p>A root user within a LXC container cannot (in theory) escalate to be root on the host machine; but many people believe that it is possible to do so. It is certainly harder to do with Docker containers (thanks to the capability restrictions) but if security is a big concern, you should stack up multiple safety mechanisms.</p>
+</blockquote>
+
+<p>For local development that isn&rsquo;t exposed to the world, this isn&rsquo;t a critical issue. If we are mounting volumes and developing in containers in a workflow that wishes to deploy containers consistently at every level of development, however, we then are unable to develop on the exact configuration that would appear in production. Tools can be created to modify container configuration upon deployment, however that introduces additional complexity.</p>
+
+<p>Is this a concern? I&rsquo;ll leave that decision up to you.</p>
+
+<h2 id="solutions">Solutions</h2>
+
+<p>This issue seems unlikely to be fixed at the boot2docker level soon. There are many workarounds proposed, each with differing complexity:</p>
+
+<ul>
+<li><a href="https://github.com/docker-library/mysql/issues/99#issuecomment-145665645">Make sure that mysql runs using the same user and group ids as your local OSX user.</a></li>
+<li><a href="https://github.com/mist64/xhyve">xhyve</a></li>
+<li>Leverage NFS in some manner instead of VBOXSF.</li>
+</ul>
+
+<p>The last solution seems to work swimmingly, but the tool recently dealt with a breaking bug. A fix has been implemented and I would encourage you to explore it further.</p>
+
+   
+Post Tags:
+<ul class="tag-list" id="tags">
+    
+        
+        
+            <li><a href="http://jacobsanford.com/tags/docker/">docker</a></li>
+        
+    
+        
+        
+            <li><a href="http://jacobsanford.com/tags/boot2docker/">boot2docker</a></li>
+        
+    
+        
+        
+            <li><a href="http://jacobsanford.com/tags/osx/">osx</a></li>
+        
+    
+</ul>
+
+</div>
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jacobsanford" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-21448090-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

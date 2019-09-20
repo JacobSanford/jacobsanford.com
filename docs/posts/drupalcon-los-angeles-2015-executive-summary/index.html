@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.58.3" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>DrupalCon Los Angeles (2015): Executive Summary &middot; Jacob Sanford</title>
+  <meta property="og:title" content="DrupalCon Los Angeles (2015): Executive Summary" />
+  <meta name="title" content="DrupalCon Los Angeles (2015): Executive Summary" />
+  <meta property="og:description" content="The following is a brief snippet of an executive summary prepared after Drupalcon, Los Angeles in 2015.
+Ditch our VM Mindset We should step back and re-evaluate our VM-Focused mindset.
+It is no secret that our server usage / computational density is very light, which is is costly and drastically increases our maintenance burden. This is a side effect of standardizing our deployment processes to use one VM per application - particularly with Islandora instances." />
+  <meta name="description" content="The following is a brief snippet of an executive summary prepared after Drupalcon, Los Angeles in 2015.
+Ditch our VM Mindset We should step back and re-evaluate our VM-Focused mindset.
+It is no secret that our server usage / computational density is very light, which is is costly and drastically increases our maintenance burden. This is a side effect of standardizing our deployment processes to use one VM per application - particularly with Islandora instances." />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://jacobsanford.com/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <meta name="geo.placename" content="Fredericton" />
+  <meta name="geo.region" content="CA-NB" />
+  <meta property="og:country_name" content="Canada" />
+  <meta property="og:locality" content="Fredericton" />
+  <meta property="og:region" content="New Brunswick" />
+  <meta property="og:site_name" content="JacobSanford.com" />
+  <meta property="og:url" content="http://jacobsanford.com/posts/drupalcon-los-angeles-2015-executive-summary/" />
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://jacobsanford.com/">
+        <img class="portrait" src="https://avatars0.githubusercontent.com/u/244894?s=460&v=4" itemprop="image" alt="Jacob Sanford">
+      </a>
+      <a href="http://jacobsanford.com/"><h1>Jacob Sanford</h1></a>
+      <p class="lead">
+        Senior Technical Operations Manager <a href='https://lib.unb.ca' target='_blank'>@UNBLibraries</a>. DevOps, k8s, workflows, and Drupal enthusiast.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://jacobsanford.com/">Home</a> </li>
+        <li><a href="/posts/"> Posts </a></li>
+      </ul>
+    </nav>
+
+    <nav>
+      Post Topics:
+      <ul class="topic-list">
+          
+                  <li><a href="http://jacobsanford.com/tags/docker/">docker</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/drupal/">drupal</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/osx/">osx</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/boot2docker/">boot2docker</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/drupal-8/">drupal 8</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/drupalcon/">drupalcon</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/presentations/">presentations</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/workflow/">workflow</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/cargodock/">cargodock</a></li>
+          
+                  <li><a href="http://jacobsanford.com/tags/ci/">ci</a></li>
+          
+      </ul>
+
+      <span class='navlabel'>Contact:</span>
+      <ul class="network-icon" aria-hidden="true">
+        <li>
+          <a itemprop="sameAs" href="mailto:jsanford@unb.ca" target="_blank" rel="noopener">
+            <i class="fa fa-envelope big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="//github.com/JacobSanford" target="_blank" rel="noopener">
+            <i class="fa fa-github big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="//www.drupal.org/u/jacobsanford" target="_blank" rel="noopener">
+            <i class="fa fa-drupal big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="https://www.linkedin.com/in/jacob-sanford-5762bb63/" target="_blank" rel="noopener">
+            <i class="fa fa-linkedin big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="https://scholar.google.com/citations?user=aN0xvUYAAAAJ" target="_blank" rel="noopener">
+            <i class="ai ai-google-scholar big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="//twitter.com/JacobSanfo" target="_blank" rel="noopener">
+            <i class="fa fa-twitter big-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a itemprop="sameAs" href="#" target="_blank" rel="noopener">
+            <i class="fa icon fa icon-applications big-icon"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2019. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    
+    <span>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">/ <a href="/">Home</a></li>
+        
+          
+              
+                  
+              
+          
+              
+                  
+                      <li class="breadcrumb-item">/ <a href="/posts">Posts</a></li>
+                  
+              
+          
+              
+                  
+                      <li class="breadcrumb-item">/ DrupalCon Los Angeles (2015): Executive Summary</li>
+                  
+              
+          
+              
+                  
+              
+          
+        
+        </ol>
+    </span>
+
+
+
+
+
+<div class="post">
+  <h1>DrupalCon Los Angeles (2015): Executive Summary</h1>
+  <span class="post-author">Jacob Sanford</span>
+  <time datetime=2015-05-21T15:13:30-0400 class="post-date">Thu, May 21, 2015</time>
+
+  
+
+<p><em>The following is a brief snippet of an executive summary prepared after Drupalcon, Los Angeles in 2015</em>.</p>
+
+<h2 id="ditch-our-vm-mindset">Ditch our VM Mindset</h2>
+
+<p>We should step back and re-evaluate our VM-Focused mindset.</p>
+
+<p>It is no secret that our server usage / computational density is very light, which is is costly and drastically increases our maintenance burden.  This is a side effect of standardizing our deployment processes to use one VM per application - particularly with Islandora instances.</p>
+
+<p>Although it was a necessary step to structure and standardize how we spin-up new projects, with a limit of 12-15 projects per server, we will repeatedly need to expand to handle increasing capacity as new projects arise, despite VM hosts running at 5-10% utilization most of the time. We also are operating an entire OS, Database Server, Web Daemon, etc. for each project. This isn&rsquo;t efficient.</p>
+
+<p>More important than the density issue, however, is that we are operating in a way that does not scale. If one project quickly needs more resources or becomes very popular, there is no way in our current method of work to add capacity without purchasing new hardware or taking drastic steps to shuffle and alter VM deployments. This is evidenced most recently when we added a new VM host : instances needed significant downtime and effort on our part to migrate to the new hardware.</p>
+
+<p>I think it is important to start conversations around changing this. If conceptually we begin to alter how we view our infrastructure and services - and start implementing projects as &lsquo;containers&rsquo; and work towards a load balanced infrastructure, we can:</p>
+
+<ul>
+<li>Reduce hardware requirements and costs drastically</li>
+<li>Handle growth more elegantly</li>
+<li>Adapt to needs quickly without necessitating drastic changes.</li>
+<li>Maintain the controlled deployment and structured configuration that we need.</li>
+<li>Reduce our maintenance burden significantly.</li>
+</ul>
+
+<h3 id="containers">Containers?</h3>
+
+<p>Instead of abstracting at a high (VM) level, containers abstract resources at the operating system level. They exist as isolated instances (As they do now at the VM level), however the overhead per container is minimal and the number of containers per server is only limited by hardware restrictions. We could start now : certainly start dropping in containers in the same way we use VMs. This would skyrocket our efficiency, but do nothing for the scaling problem.</p>
+
+<p>Hosts like Pantheon are doing spectacular things with &ldquo;containerization&rdquo; of projects. Most commercial infrastructure is based on custom development, but there are two open source abstraction applications that are in currently in use now by Universities like Duke.</p>
+
+<p>I believe we should consider Kubernetes, which provides:</p>
+
+<ul>
+<li>Scalable Management of applications as containers
+
+<ul>
+<li><a href="https://github.com/googlecloudplatform/kubernetes">https://github.com/googlecloudplatform/kubernetes</a></li>
+</ul></li>
+<li>Load balancing and container management through a Replication Controller</li>
+<li>Network Block Storage (network) for consistent data across containers</li>
+</ul>
+
+<p>There are currently two competing container formats:</p>
+
+<ul>
+<li>Docker: <a href="https://docs.docker.com/faq/">https://docs.docker.com/faq/</a></li>
+<li>Rkt: <a href="https://github.com/coreos/rkt">https://github.com/coreos/rkt</a></li>
+</ul>
+
+<p>Docker appears to be the leading product.</p>
+
+<h3 id="further-reading">Further Reading:</h3>
+
+<ul>
+<li><a href="https://docs.google.com/document/d/1uQksK49qtkYFLUWyPeLBy2Ugs7nTgL13aVDujOOY2mc/edit">https://docs.google.com/document/d/1uQksK49qtkYFLUWyPeLBy2Ugs7nTgL13aVDujOOY2mc/edit</a></li>
+<li><a href="https://events.drupal.org/losangeles2015/sessions/php-containers-scale-5k-containers-server">https://events.drupal.org/losangeles2015/sessions/php-containers-scale-5k-containers-server</a></li>
+<li><a href="https://groups.drupal.org/docker">https://groups.drupal.org/docker</a></li>
+</ul>
+
+<h2 id="drush-makefiles-are-dead">Drush Makefiles are dead</h2>
+
+<p>We should migrate away from Drush makefiles and begin relying on composer to control and build our Drupal instances.</p>
+
+<p>The community has recently (last month) launched a packagist mirror of all drupal modules that can build entire drupal suites from scratch. Composer is the current future of dependency building in PHP applications, and it makes sense for us to standardize to using it.</p>
+
+<p>Our deployment system currently relies on drush makefiles and &ldquo;<a href="http://cambrico.net/drupal/using-composer-to-build-your-drupal-7-projects">rewriting the actual files themselves would involve paying back a lot of technical debt</a>&rdquo;. The benefit to using composer files is pretty great.  One benefit: Composer caches and handles version upgrades really elegantly, whereas drush make starts from scratch every time. This takes time and bandwidth and resources.</p>
+
+<h2 id="there-is-an-enormous-community-behind-using-drupal-as-headless-this-will-potentially-change-the-way-we-see-and-use-drupal">There is an enormous community behind using Drupal as &lsquo;headless&rsquo;. This will potentially change the way we see and use Drupal.</h2>
+
+<p>There were several sessions around Headless Drupal : using Drupal only as a backend content repository/editing interface, but with a front-end provided by a different framework and populated via REST.</p>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/0ARnhwcI74g" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<h2 id="elasticsearch-will-eventually-replace-solr">Elasticsearch will (eventually) replace Solr</h2>
+
+<p>Elasticsearch is scalable, containerized.</p>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/HjYnM0-yEoI" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+   
+Post Tags:
+<ul class="tag-list" id="tags">
+    
+        
+        
+            <li><a href="http://jacobsanford.com/tags/drupalcon/">drupalcon</a></li>
+        
+    
+        
+        
+            <li><a href="http://jacobsanford.com/tags/drupal/">drupal</a></li>
+        
+    
+</ul>
+
+</div>
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jacobsanford" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-21448090-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>
