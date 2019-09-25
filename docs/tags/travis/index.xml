@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>travis on Jacob Sanford</title>
-    <link>http://jacobsanford.com/tags/travis/</link>
+    <link>https://jacobsanford.com/tags/travis/</link>
     <description>Recent content in travis on Jacob Sanford</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 01 Apr 2016 08:27:04 -0400</lastBuildDate>
     
-	<atom:link href="http://jacobsanford.com/tags/travis/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://jacobsanford.com/tags/travis/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Docker Images, Security, and the New Maintenance Cycle</title>
-      <link>http://jacobsanford.com/posts/docker-images-security-and-the-new-maintenance-cycle/</link>
+      <link>https://jacobsanford.com/posts/docker-images-security-and-the-new-maintenance-cycle/</link>
       <pubDate>Fri, 01 Apr 2016 08:27:04 -0400</pubDate>
       
-      <guid>http://jacobsanford.com/posts/docker-images-security-and-the-new-maintenance-cycle/</guid>
+      <guid>https://jacobsanford.com/posts/docker-images-security-and-the-new-maintenance-cycle/</guid>
       <description>Container management and development of a process towards keeping Docker images secure may seem like a daunting task, especially at scale. Stale images lead to security vulnerablities, and this is a very real concern when administrators can let containers run for weeks at a time without updates.
 Like most early adopters, we struggled for some time to adjust our concept of a maintenance cycle within a container-driven paradigm. However, over time, we&amp;rsquo;ve evolved a moderately sane method for keeping our containers up to date and secure:</description>
     </item>

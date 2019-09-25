@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>github on Jacob Sanford</title>
-    <link>http://jacobsanford.com/tags/github/</link>
+    <link>https://jacobsanford.com/tags/github/</link>
     <description>Recent content in github on Jacob Sanford</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 14 Jan 2016 14:33:58 -0400</lastBuildDate>
     
-	<atom:link href="http://jacobsanford.com/tags/github/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://jacobsanford.com/tags/github/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Re-Thinking Workflows : Development and Maintenance of Drupal Instances at Scale</title>
-      <link>http://jacobsanford.com/posts/re-thinking-workflows-development-and-maintenance-of-drupal-instances-at-scale/</link>
+      <link>https://jacobsanford.com/posts/re-thinking-workflows-development-and-maintenance-of-drupal-instances-at-scale/</link>
       <pubDate>Thu, 14 Jan 2016 14:33:58 -0400</pubDate>
       
-      <guid>http://jacobsanford.com/posts/re-thinking-workflows-development-and-maintenance-of-drupal-instances-at-scale/</guid>
+      <guid>https://jacobsanford.com/posts/re-thinking-workflows-development-and-maintenance-of-drupal-instances-at-scale/</guid>
       <description>For the past several years, we have been developing and managing a moderate amount of Drupal instances across several VM hosts using a homegrown product we call pushback. It leverages drush in conjunction with Jenkins and gitHub. Why develop a custom framework? Although several products existed [1] [2], none seemed to meet our desire for simplicity and maintainability.
 Pushback was born through discussions with Jen Whitney and Kassim Machioudi, and was inspired by the (now-abandoned) Tugboat project by Lullabot.</description>
     </item>

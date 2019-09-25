@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>vmware on Jacob Sanford</title>
-    <link>http://jacobsanford.com/tags/vmware/</link>
+    <link>https://jacobsanford.com/tags/vmware/</link>
     <description>Recent content in vmware on Jacob Sanford</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 12 Oct 2015 12:32:51 -0400</lastBuildDate>
     
-	<atom:link href="http://jacobsanford.com/tags/vmware/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://jacobsanford.com/tags/vmware/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Deploying a docker-machine to a VMWare VSphere Host</title>
-      <link>http://jacobsanford.com/posts/deploying-a-docker-machine-to-a-vmware-vsphere-host/</link>
+      <link>https://jacobsanford.com/posts/deploying-a-docker-machine-to-a-vmware-vsphere-host/</link>
       <pubDate>Mon, 12 Oct 2015 12:32:51 -0400</pubDate>
       
-      <guid>http://jacobsanford.com/posts/deploying-a-docker-machine-to-a-vmware-vsphere-host/</guid>
+      <guid>https://jacobsanford.com/posts/deploying-a-docker-machine-to-a-vmware-vsphere-host/</guid>
       <description>Docker-Machine and VSphere By default, docker-machine on OSX leverages Virtualbox to deploy a Boot2Docker VM to serve as an endpoint for the host docker commands. This configuration satisfies a common use case for development, but does suffer from drawbacks relating to &amp;ldquo;the 3 P&amp;rsquo;s&amp;rdquo; : Performance, Persistence and Permission issues (due to VBoxSF). You can dodge some of these by provisioning Boot2Docker VM on a vSphere managed host, instead of your local computer.</description>
     </item>
     

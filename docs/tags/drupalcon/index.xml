@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>drupalcon on Jacob Sanford</title>
-    <link>http://jacobsanford.com/tags/drupalcon/</link>
+    <link>https://jacobsanford.com/tags/drupalcon/</link>
     <description>Recent content in drupalcon on Jacob Sanford</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 30 Apr 2017 18:03:30 -0400</lastBuildDate>
     
-	<atom:link href="http://jacobsanford.com/tags/drupalcon/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://jacobsanford.com/tags/drupalcon/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>DrupalCon Baltimore (2017): Executive Summary</title>
-      <link>http://jacobsanford.com/posts/drupalcon-baltimore-2017-executive-summary/</link>
+      <link>https://jacobsanford.com/posts/drupalcon-baltimore-2017-executive-summary/</link>
       <pubDate>Sun, 30 Apr 2017 18:03:30 -0400</pubDate>
       
-      <guid>http://jacobsanford.com/posts/drupalcon-baltimore-2017-executive-summary/</guid>
+      <guid>https://jacobsanford.com/posts/drupalcon-baltimore-2017-executive-summary/</guid>
       <description>The following is a portion of an executive summary prepared after Drupalcon, Baltimore in 2017.
 After spending the previous yeah fostering a belief that we are little shop &amp;lsquo;on the edge&amp;rsquo;, DrupalCon never fails to humble me. There are extremely intelligent people doing amazing things in the community, and the opportunity to learn and network with them is invaluable.
 Drupal 8 Surprisingly, the uptake for Drupal 8 in the community is still quite low, despite the numbers that show steady D8 growth.</description>
@@ -24,10 +24,10 @@ Drupal 8 Surprisingly, the uptake for Drupal 8 in the community is still quite l
     
     <item>
       <title>DrupalCon Los Angeles (2015): Executive Summary</title>
-      <link>http://jacobsanford.com/posts/drupalcon-los-angeles-2015-executive-summary/</link>
+      <link>https://jacobsanford.com/posts/drupalcon-los-angeles-2015-executive-summary/</link>
       <pubDate>Thu, 21 May 2015 15:13:30 -0400</pubDate>
       
-      <guid>http://jacobsanford.com/posts/drupalcon-los-angeles-2015-executive-summary/</guid>
+      <guid>https://jacobsanford.com/posts/drupalcon-los-angeles-2015-executive-summary/</guid>
       <description>The following is a brief snippet of an executive summary prepared after Drupalcon, Los Angeles in 2015.
 Ditch our VM Mindset We should step back and re-evaluate our VM-Focused mindset.
 It is no secret that our server usage / computational density is very light, which is is costly and drastically increases our maintenance burden. This is a side effect of standardizing our deployment processes to use one VM per application - particularly with Islandora instances.</description>

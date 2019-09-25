@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>cargodock on Jacob Sanford</title>
-    <link>http://jacobsanford.com/tags/cargodock/</link>
+    <link>https://jacobsanford.com/tags/cargodock/</link>
     <description>Recent content in cargodock on Jacob Sanford</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 03 May 2018 14:11:30 -0400</lastBuildDate>
     
-	<atom:link href="http://jacobsanford.com/tags/cargodock/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://jacobsanford.com/tags/cargodock/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Our Drupal 8 CI Workflow at UNB Libraries</title>
-      <link>http://jacobsanford.com/posts/our-drupal-8-ci-workflow-at-unb-libraries/</link>
+      <link>https://jacobsanford.com/posts/our-drupal-8-ci-workflow-at-unb-libraries/</link>
       <pubDate>Thu, 03 May 2018 14:11:30 -0400</pubDate>
       
-      <guid>http://jacobsanford.com/posts/our-drupal-8-ci-workflow-at-unb-libraries/</guid>
+      <guid>https://jacobsanford.com/posts/our-drupal-8-ci-workflow-at-unb-libraries/</guid>
       <description>In 2010, amid a usual morning of manual Drupal module updates, a colleague at UNB Libraries, Kassim Machioudi suggested:
  Imagine if we only needed to change a version number in a metadata file to push all of these updates?
  At the time, that idea seemed like a blue-sky dream. We were a small team, running many multisite and standalone instances of Drupal 5&amp;amp;6 across multiple servers. Drush make was not the stable solution it later became.</description>

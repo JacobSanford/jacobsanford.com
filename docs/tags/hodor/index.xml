@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>hodor on Jacob Sanford</title>
-    <link>http://jacobsanford.com/tags/hodor/</link>
+    <link>https://jacobsanford.com/tags/hodor/</link>
     <description>Recent content in hodor on Jacob Sanford</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 28 Feb 2016 19:11:08 -0400</lastBuildDate>
     
-	<atom:link href="http://jacobsanford.com/tags/hodor/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://jacobsanford.com/tags/hodor/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Hodor for Slack</title>
-      <link>http://jacobsanford.com/posts/hodor-for-slack/</link>
+      <link>https://jacobsanford.com/posts/hodor-for-slack/</link>
       <pubDate>Sun, 28 Feb 2016 19:11:08 -0400</pubDate>
       
-      <guid>http://jacobsanford.com/posts/hodor-for-slack/</guid>
+      <guid>https://jacobsanford.com/posts/hodor-for-slack/</guid>
       <description>Long awaited fresh updates to the famous Hodor for Slack bot Docker Image. My life&amp;rsquo;s work, it leverages python-rtmbot and python-rtmbot-hodor to monitor any mentions of Hodor&amp;rsquo;s name in a Slack channel and reply with a message:
 Hodor&amp;rsquo;s replies are determined by mood.
 The &amp;lsquo;mood&amp;rsquo; of reply is determined by comparing the content of the triggering message against a library of words and human interpreted intent scoring. After mood assignment, a message is chosen based on a &amp;lsquo;item drop&amp;rsquo; type selection process that allows for weighting of responses.</description>

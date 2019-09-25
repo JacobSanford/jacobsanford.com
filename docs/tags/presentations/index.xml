@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>presentations on Jacob Sanford</title>
-    <link>http://jacobsanford.com/tags/presentations/</link>
+    <link>https://jacobsanford.com/tags/presentations/</link>
     <description>Recent content in presentations on Jacob Sanford</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 08 Jun 2018 09:01:00 -0400</lastBuildDate>
     
-	<atom:link href="http://jacobsanford.com/tags/presentations/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://jacobsanford.com/tags/presentations/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>APLA 2018 Presentation: The Million Image Mountain</title>
-      <link>http://jacobsanford.com/posts/conference-presentation-the-million-image-mountain/</link>
+      <link>https://jacobsanford.com/posts/conference-presentation-the-million-image-mountain/</link>
       <pubDate>Fri, 08 Jun 2018 09:01:00 -0400</pubDate>
       
-      <guid>http://jacobsanford.com/posts/conference-presentation-the-million-image-mountain/</guid>
+      <guid>https://jacobsanford.com/posts/conference-presentation-the-million-image-mountain/</guid>
       <description>The Million Image Mountain: Challenges Faced Post-Capture in Bulk Digitization
  Often we consider the challenging portion of a bulk digitization project to be the digital capture process itself: purchasing equipment, allocating staff, and wrangling expertise to capture and curate. What comes next?
 Unfortunately, many unanticipated post-digitization challenges lurk in the annals of our projects: workflow, hardware requirements, surrogate generation and storage. It seems that when facing these challenges, the devil is in the details; and our failure to plan has sometimes been catastrophic.</description>
@@ -24,10 +24,10 @@ Unfortunately, many unanticipated post-digitization challenges lurk in the annal
     
     <item>
       <title>Access 2016 Presentation: Declaring Bankruptcy on Technical Debt</title>
-      <link>http://jacobsanford.com/posts/conference-presentation-declaring-bankruptcy-on-technical-debt/</link>
+      <link>https://jacobsanford.com/posts/conference-presentation-declaring-bankruptcy-on-technical-debt/</link>
       <pubDate>Wed, 05 Oct 2016 11:50:00 -0400</pubDate>
       
-      <guid>http://jacobsanford.com/posts/conference-presentation-declaring-bankruptcy-on-technical-debt/</guid>
+      <guid>https://jacobsanford.com/posts/conference-presentation-declaring-bankruptcy-on-technical-debt/</guid>
       <description>Declaring Bankruptcy on Technical Debt: Modernizing a Library Systems Infrastructure and Workflow
    We exist as a very small Library Systems team at the University of New Brunswick Libraries, tasked with maintaining dozens of custom applications, Drupal instances, as well as required to meet a demand for constant new development.
 Several years ago we faced the reality of an un-repayable level of technical debt. The burden from historic organically developed projects, a lack of responsible technical policy and our failure to adopt a standardized architecture had left our team unable to provide an acceptable level of service without a drastic change in how we worked, the tools we worked with, and the projects we developed.</description>

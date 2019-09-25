@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>search_api_solr on Jacob Sanford</title>
-    <link>http://jacobsanford.com/tags/search_api_solr/</link>
+    <link>https://jacobsanford.com/tags/search_api_solr/</link>
     <description>Recent content in search_api_solr on Jacob Sanford</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 10 Nov 2016 08:27:04 -0400</lastBuildDate>
     
-	<atom:link href="http://jacobsanford.com/tags/search_api_solr/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://jacobsanford.com/tags/search_api_solr/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Drupal, search_api_solr and Partial Matches</title>
-      <link>http://jacobsanford.com/posts/drupal-search_api_solr-and-partial-matches/</link>
+      <link>https://jacobsanford.com/posts/drupal-search_api_solr-and-partial-matches/</link>
       <pubDate>Thu, 10 Nov 2016 08:27:04 -0400</pubDate>
       
-      <guid>http://jacobsanford.com/posts/drupal-search_api_solr-and-partial-matches/</guid>
+      <guid>https://jacobsanford.com/posts/drupal-search_api_solr-and-partial-matches/</guid>
       <description>Configuring solr to return partial matches through Drupal&amp;rsquo;s search_api_solr is well documented. In particular, one d.o document is thorough and stands out: Customizing the Solr configuration. It states:
  First, copy a text type definition to schema_extra_types.xml and change the identifier, as described above. Then, add the following line to the type definition after the first occurrence of &amp;ldquo;solr.SnowballPorterFilterFactory&amp;rdquo; (inside of the element; not after the second occurrence):
 &amp;lt;filter class=&amp;#34;solr.</description>

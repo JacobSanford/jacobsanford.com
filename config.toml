@@ -1,4 +1,4 @@
-baseURL = "http://jacobsanford.com/"
+baseURL = "https://jacobsanford.com/"
 languageCode = "en-us"
 title = "Jacob Sanford"
 theme = "hyde"
