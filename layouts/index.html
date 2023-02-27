@@ -1,0 +1,100 @@
+{{ define "main" -}}
+<h1>Welcome!</h1>
+<h2>Introduction</h2>
+<p>I am Jake, the Senior Technical Operations Manager at <a href="https://lib.unb.ca" target="_blank">UNB Libraries</a>. I have over 20 years experience in web application creation, project management, and development.</p>
+
+<p>My primary interest is creating workflows and finding solutions that develop, deploy, and maintain web applications built on modern frameworks efficiently. On the journey towards that goal, we created <a href="https://github.com/unb-libraries/dockworker" target="_blank">Dockworker</a> - an application interface which provides developers, site builders and operational engineers a single technical entrypoint with a consistent, unified workflow regardless of the framework.</p>
+
+<p>I focus my efforts to improve Developer Experience, striving to create workflows that allow developers to work quickly and consistently. This lets team members to focus their time and efforts on the challenges of a project (and not the development environment or application infrastructure that powers it).</p>
+
+<p>I am a FOSS and (in particular) Drupal Evangelist. Our primary framework at UNB Libraries is Drupal, and I have been active on Drupal.org since 2010. In that time, I have contributed to Drupal modules (including Drupal core), and worked in my spare time with various agencies (including Acquia) towards the development of large scale Drupal Applications. For details about my Drupal project contributions, please visit my d.o. profile.</p>
+
+<p>I believe strongly in the open data movement and feel that education should not be restricted to those who can afford formal training. In that vein, I am proud of the accomplishments of our team at UNB Libraries in the area of dissemination of open academic knowledge and research data. I am particularly proud of how our work is <a href="https://github.com/unb-libraries/lib.unb.ca" target="_blank">published and licensed</a> under a strong commitment to making as much of our development/workflow as possible freely available.</p>
+
+<p></p>
+
+<p>Finally, I own and operate <em>Elemental Codeworks Inc</em>, a CCPC. Through it, I allocate a small amount of consulting, project management, and application development time each month to external commercial projects. If you are interested in retaining my services, <a href="mailto:jake@elementalcodeworks.com">please contact me</a> to discuss availability.</p>
+
+<div class="posts">
+    {{ range where .Paginator.Pages "Section" "eq" "posts" }}
+    <article class="post">
+        {{ partial "post/info.html" . }}
+        {{ .Summary }}
+        {{ if .Truncated }}
+        <div class="read-more-link">
+            <a href="{{ .RelPermalink }}">Read More…</a>
+        </div>
+        {{ end }}
+    </article>
+    {{- end }}
+</div>
+
+<h2>Strengths / Interests</h2>
+<ul>
+    <li>Technical Communication
+        <ul>
+            <li>Technical project planning, requirements gathering</li>
+            <li>Requirements distillation into issue/task management systems</li>
+            <li>Contribution reviews - patch/code reviews, progress</li>
+            <li>Clear, concise technical writing</li>
+        </ul>
+    </li>
+    <li>Developer Experience
+        <ul>
+            <li>'Single command' provisioning of development environments</li>
+            <li>A unified cross-platform development experience</li>
+        </ul>
+    </li>
+    <li>Container Based Infrastructures
+        <ul>
+            <li>Local bare-metal kubernetes clusters</li>
+        </ul>
+    </li>
+</ul>
+
+<h2>Notable Projects / Experience</h2>
+<ul>
+    <li><a href="https://newspapers.lib.unb.ca/" target="_blank">New Brunswick Historical Newspapers</a>
+        <ul>
+            <li>New Brunswick Historical Newspapers Project provides researchers with unified access to UNB Libraries' current and historical newspaper collections in all formats, from New Brunswick and across the world. Search and discover print, microform, and selected digital newspaper titles available from UNB Libraries.</li>
+        </ul>
+    </li>
+    <li><a href="https://unbscholar.lib.unb.ca/" target="_blank">UNB Scholar</a>
+        <ul>
+            <li>UNB Scholar is an institutional repository initiative of UNB Libraries intended to collect, preserve, showcase, and promote the open access scholarly output of the UNB community.</li>
+        </ul>
+    </li>
+</ul>
+
+<h2>Selected Presentations</h2>
+<ul>
+    <li><u>The Million Image Mountain: A Case Study in Digital Preservation</u>
+        <div>
+            <p><small>Atlantic Provinces Library Association (APLA) Conference 2018</small></p>
+            <p>Often we consider the challenging portion of a bulk digitization project to be the digital capture process itself: purchasing equipment, allocating staff, and wrangling expertise to capture and curate. What comes next?</p>
+            <p>Unfortunately, many unanticipated post-digitization challenges lurk in the annals of our projects: workflow, hardware requirements, surrogate generation and storage. It seems that when facing these challenges, the devil is in the details; and our failure to plan has sometimes been catastrophic.</p>
+            <p>The presentation describes we’ve learned, offer our thoughts looking forward, and feature a discussion of how Docker has changed how we approach the post-digitization steps of our ongoing digital capture projects.</p>
+        </div>
+    </li>
+    <li><u><a href="https://www.youtube.com/watch?v=P3S4RdrBTsY" target="_blank">Declaring Bankruptcy on Technical Debt</a></u>
+        <div>
+            <p><small>Access 2016</small></p>
+            <p>We are a small Library Systems team at the University of New Brunswick Libraries, tasked with maintaining dozens of custom applications, Drupal instances, as well as required to meet a demand for constant new development.</p>
+            <p>Several years ago we faced the reality of an un-repayable level of technical debt. The burden from historic organically developed projects, a lack of responsible technical policy and our failure to adopt a standardized architecture had left our team unable to provide an acceptable level of service without a drastic change in how we worked, the tools we worked with, and the projects we developed. We wanted to solve this.</p>
+            <p>This session will present our evolution from the architecture and workflow of yesteryear towards a version controlled, CI centered workflow that creates, updates and tests our web assets as we work.</p>
+        </div>
+    </li>
+</ul>
+
+<h2>Formal Education</h2>
+<ul>
+    <li>
+        <div class="description">
+            <p class="course">Ph.D. - Physical (Computational) Chemistry <a href="https://web.archive.org/web/20220526212629/https://www.unb.ca/" target="_blank">University of New Brunswick</a> (2007)</p>
+        </div>
+    </li>
+</ul>
+
+
+{{ partial "pagination.html" . }}
+{{- end }}

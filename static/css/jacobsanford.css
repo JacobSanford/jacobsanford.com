@@ -1,0 +1,28 @@
+h2 {
+    padding-top: 0.8rem;
+}
+
+ul.sidebar-nav {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+}
+
+html {
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 400;
+}
+
+.sidebar-about h1 {
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 400;
+    font-size: 1.5rem;
+}
+
+.lead {
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 400;
+    font-size: 1.0rem;
+}
