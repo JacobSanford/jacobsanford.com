@@ -1,0 +1,22 @@
+name: Deploy JacobSanford.com
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  push-with-wrangler:
+    name: Push with Wrangler to Cloudflare Pages
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout HEAD
+        uses: actions/checkout@v4
+
+      - name: Wrangler Deploy
+        uses: cloudflare/wrangler-action@v3
+        env:
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          command: pages deploy ./public --project-name ${{ secrets.CF_PROJECT_NAME }} --branch master

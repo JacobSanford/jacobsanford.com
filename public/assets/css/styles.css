@@ -1,0 +1,10 @@
+/* Focus styles for better keyboard navigation */
+a:focus {
+  outline: 2px solid #4ade80; /* Tailwind's teal-400 */
+  outline-offset: 2px;
+}
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
