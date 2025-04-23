@@ -289,22 +289,38 @@
 
   <!-- Contact -->
   <section id="contact" class="max-w-3xl mx-auto px-4 py-6">
-    <h2 class="text-2xl font-semibold border-b border-zinc-700 pb-2 mb-4">Contact</h2>
-    <h3>Feel free to reach out:</h3>
-    <p class="text-zinc-300 mb-2">
-      EMail: 
-      <a href="mailto:jacob@jacobsanford.com" class="text-blue-400 hover:underline">jacob@jacobsanford.com</a>
-    </p>
-    <p class="text-zinc-300 mb-2">
-      Telephone: (506) 476-3329
-      <span class="text-zinc-200 block">
-        <em>(Due to the overwhelming number of sales and spam calls, I rarely answer unknown numbers. Please leave a message!)</em>
-      </span>
-    </p>
-    <p class="text-zinc-300">
-      LinkedIn: 
-      <a href="https://www.linkedin.com/in/jacob-sanford-5762bb63/" class="text-blue-400 hover:underline" target="_blank">My Profile</a>
-    </p>
+    <h2 class="text-2xl font-semibold border-b border-zinc-700 pb-2 mb-6">Contact</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-zinc-300">
+  
+      <!-- Email -->
+      <a href="mailto:jacob@jacobsanford.com" class="block bg-zinc-800 rounded-lg p-4 shadow hover:bg-zinc-700 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-400">
+        <div class="flex items-center gap-2 mb-2 text-teal-400">
+          <i class="fas fa-envelope text-lg"></i>
+          <h3 class="font-semibold text-sm uppercase tracking-wide">Email</h3>
+        </div>
+        <p class="text-blue-400 break-words">jacob@jacobsanford.com</p>
+      </a>
+  
+      <!-- Phone -->
+      <a href="tel:5064763329" class="block bg-zinc-800 rounded-lg p-4 shadow hover:bg-zinc-700 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-400">
+        <div class="flex items-center gap-2 mb-2 text-teal-400">
+          <i class="fas fa-phone text-lg"></i>
+          <h3 class="font-semibold text-sm uppercase tracking-wide">Phone</h3>
+        </div>
+        <p class="mb-1">(506) 476-3329</p>
+        <p class="text-xs text-zinc-400 italic">Please leave a message if I don't answer.</p>
+      </a>
+  
+      <!-- LinkedIn -->
+      <a href="https://www.linkedin.com/in/jacob-sanford-5762bb63/" target="_blank" rel="noopener noreferrer" class="block bg-zinc-800 rounded-lg p-4 shadow hover:bg-zinc-700 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-400">
+        <div class="flex items-center gap-2 mb-2 text-teal-400">
+          <i class="fab fa-linkedin text-lg"></i>
+          <h3 class="font-semibold text-sm uppercase tracking-wide">LinkedIn</h3>
+        </div>
+        <p class="text-blue-400">View Profile</p>
+      </a>
+  
+    </div>
   </section>
 
   <!-- Footer -->
